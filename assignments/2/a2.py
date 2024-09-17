@@ -161,7 +161,7 @@ def plot_inference_time_for_different_models(x_train_red:np.ndarray, x_train:np.
     plt.title('Inference Time of KNN models')
     plt.xlabel('KNN Model')
     plt.ylabel('Inference Time (seconds)')
-    plt.savefig('figures/knn_models_inf_time.png')
+    plt.savefig('knn_models_inf_time.png')
 
 #======================================3: K-Means============================================
 DATA = "./data/external/"
@@ -345,4 +345,4 @@ print(f'F1-Score (micro): {evaluation.f1_score(method="micro")}')
 
 x_train_org = norm_features[:train_size]
 x_val_org = norm_features[train_size:train_size + val_size]
-# plot_inference_time_for_different_models(x_train=x_train_org, x_train_red=x_train, y_train=y_train, x_val=x_val_org, x_val_red=x_val)
+plot_inference_time_for_different_models(x_train=x_train_org, x_train_red=x_train, y_train=y_train, x_val=x_val_org, x_val_red=x_val)
