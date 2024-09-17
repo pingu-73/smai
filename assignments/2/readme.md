@@ -136,3 +136,59 @@ Fig: AIC, BIC are reduced dataset with dim=4
 <p id="HC"> </p>
 
 ## 8 Hierarchical Clustering
+Linkage Methods in Hierarchical Clustering:
+- Single Linkage: Minimum distance between points in two clusters.
+
+$$d_{single}(C_i, C_j) = \min_{x \in C_i, y \in C_j} d(x, y)$$
+
+- Complete Linkage: Maximum distance between points in two clusters.
+
+$$d_{complete}(C_i, C_j) = \max_{x \in C_i, y \in C_j} d(x, y)$$
+
+- Median Linkage: Distance between median points of two clusters.
+
+$$d_{median}(C_i, C_j) = \|\tilde{x}_i - \tilde{x}_j\|^2$$
+
+where $\tilde{x}_i$ is the median of cluster $C_i$
+
+- Average Linkage: Average distance between all pairs of points in two clusters.
+
+$$d_{average}(C_i, C_j) = \frac{1}{|C_i||C_j|} \sum_{x \in C_i} \sum_{y \in C_j} d(x, y)$$
+
+- Ward's Method: Minimizes the increase in total within-cluster variance after merging.
+
+$$d_{ward}(C_i, C_j) = \sqrt{\frac{2|C_i||C_j|}{|C_i|+|C_j|}} \|\bar{x}_i - \bar{x}_j\|$$
+
+where $\bar{x}_i$ is the centroid of cluster $C_i$
+
+- Centroid Linkage: Distance between centroids of two clusters.
+
+$$d_{centroid}(C_i, C_j) = \|\bar{x}_i - \bar{x}_j\|^2$$
+
+where $\bar{x}_i$ is the centroid of cluster $C_i$
+
+<p id="Dendrograms"> </p>
+
+#### <u>Below are all the dendrograms produced:</u>
+
+<center>
+
+![](../2/figures/hc_dgm_metric=cosine_method=average.png)
+![](../2/figures/hc_dgm_metric=cosine_method=complete.png)
+![](../2/figures/hc_dgm_metric=cosine_method=single.png)
+![](../2/figures/hc_dgm_metric=cosine_method=weighted.png)
+![](../2/figures/hc_dgm_metric=euclidean_method=average.png)
+![](../2/figures/hc_dgm_metric=euclidean_method=centroid.png)
+![](../2/figures/hc_dgm_metric=euclidean_method=complete.png)
+![](../2/figures/hc_dgm_metric=euclidean_method=median.png)
+![](../2/figures/hc_dgm_metric=euclidean_method=single.png)
+![](../2/figures/hc_dgm_metric=euclidean_method=ward.png)
+![](../2/figures/hc_dgm_metric=euclidean_method=weighted.png)
+![](../2/figures/hc_dgm_metric=minkowski_method=average.png)
+![](../2/figures/hc_dgm_metric=minkowski_method=complete.png)
+![](../2/figures/hc_dgm_metric=minkowski_method=single.png)
+![](../2/figures/hc_dgm_metric=minkowski_method=weighted.png)
+
+</center>
+
+> On inspecting all the above dendrograms we can see that the best linkage method is `ward`
