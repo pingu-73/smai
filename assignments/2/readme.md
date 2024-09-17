@@ -64,15 +64,11 @@ where:
 **Akaike Information Criterion (AIC)** and **Bayesian Information Criterion (BIC)** are used for model selection in Gaussian Mixture Models (GMMs) to <span style="color: green;">balance goodness of fit</span> with <span style="color: red;">model complexity</span>.
 
 - **AIC**: Measures the relative quality of a statistical model, <u>penalizing for the number of parameters</u> to <span style="color: green;">avoid overfitting</span>.
-  $$
-  \text{AIC} = 2k - 2 \ln(\hat{L})
-  $$
+  $$ \text{AIC} = 2k - 2 \ln(\hat{L}) $$
   where $k$ is the number of parameters and $\hat{L}$ is the maximum likelihood of the model.
 
 - **BIC**: Similar to AIC but with a <u>stronger penalty for model complexity</u>, suitable for larger sample sizes.
-  $$
-  \text{BIC} = \ln(n)k - 2 \ln(\hat{L})
-  $$
+  $$ \text{BIC} = \ln(n)k - 2 \ln(\hat{L})$$
   where $n$ is the number of observations and $k$ is the number of parameters.
 
 Both criteria help in selecting the model with the best trade-off between fit and complexity. For selecting the suitable value of $k$ we want to <span style="color: green;">minimise both AIC and BIC.</span>
