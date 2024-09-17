@@ -192,3 +192,37 @@ where $\bar{x}_i$ is the centroid of cluster $C_i$
 </center>
 
 > On inspecting all the above dendrograms we can see that the best linkage method is `ward`
+
+
+---
+
+<p id="Spotify"></p>
+
+## Nearest Neighbor Search - Spotify Dataset
+
+
+
+<center>
+
+![Scree Plot of Spotify Dataset](../2/figures/spotify_screen_plot.png)
+
+*Figure: Scree plot of the complete original Spotify Dataset*
+
+</center>
+
+> From the Scree plot we can clearly see that the plot flattens out after k = 4, hence we take the optimal number of dimensions to reduce to as 3
+
+<p id="Evaluation"></p>
+
+### KNN on reduced dataset using the best_k and best_metric obtained in A1
+
+In A1 we obtained $best_k$ = 50 and $best_{metric}$ = Manhattan
+
+Metrics obtained for the complete spotify dataset in A1 are as follows:
+<center>
+
+![](../2/figures/model_evluations_q9.png)
+
+![](../2/figures/knn_models_inf_time.png)
+</center>
+
