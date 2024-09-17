@@ -89,9 +89,8 @@ def plot_AIC_BIC_vs_k(embeddings:np.ndarray, outPath:str) -> None:
         plt.show()
 
 
-def read_word_embeddings_data() -> tuple[np.ndarray, np.ndarray]:
-    df = pd.read_feather('./data/external/word-embeddings.feather')
-    # df dim : 200 x 2 where second coloumn is 512 dim vector embedding
+def read_word_embeddings_data() -> tuple[np.ndarray, np.ndarray]: 
+    df = pd.read_feather('./data/external/word-embeddings.feather') #dim : 200x2 where second coloumn is 512 dim vector embedding
     data = df.to_numpy()
     embeddings = np.vstack(data[:,-1])
     labels = np.vstack(data[:,:1])
@@ -134,142 +133,7 @@ def plot_dendrogram(data:np.ndarray, dist_metric, dist_method):
     plt.tight_layout()
     plt.savefig(f'hc_dgm_metric={dist_metric}_method={dist_method}')
     # plt.show()
-#======================================3:K-Means============================================
-DATA = "./data/external/"
-df = feather.read_feather(DATA + "word-embeddings.feather")
-# df dim : 200 x 2 where second coloumn is 512 dim vector embedding
-data = df.to_numpy()
-embeddings = np.vstack(data[:,-1])
-labels = np.vstack(data[:,:1])
-vit_embeddings = embeddings.astype(np.float64)
 
-### 3.1 WCSS v/s k plot
-# plot_k_vs_cost(embeddings=vit_embeddings, outPath='wcss_vs_k_plot_q1.png')
-
-#### Kmeans for Optimal Number of Clusters
-k_kmeans1 = 7
-kmeans = K_Means(k=k_kmeans1)
-kmeans.fit(vit_embeddings)
-cluster_assigments = kmeans.predict(vit_embeddings)
-print_clusters(labels=labels, cluster_assignments=cluster_assigments)
-
-#======================================4:GMM============================================
-# plot_AIC_BIC_vs_k(vit_embeddings, 'gmm_aic_bic_plot.png')
-
-gmm = GMM(num_components=10)
-gmm.fit(X=vit_embeddings)
-
-gmm_skl = GaussianMixture(n_components=10)
-gmm_skl.fit(X=vit_embeddings)
-
-### plotting AIC,BIC v/s K 
-# plot_AIC_BIC_vs_k(embeddings=vit_embeddings,outPath='gmm_aic_bic_vs_k.png')
-
-# -------------------- GMM using k_gmm1 ----------------
-k_gmm1 = 1
-gmm = GMM(num_components=k_gmm1)
-gmm.fit(X=vit_embeddings)
-likelihood = gmm.getLikelihood(embeddings)
-membership_mat = gmm.getMembership()
-cluster_assignments = np.argmax(membership_mat, axis=1)
-print_clusters(labels=labels, cluster_assignments=cluster_assignments)
-
-
-
-#======================================5:PCA============================================
-
-# testing on 2D Dataset
-df_2d = pd.read_csv('./data/interim/a2/test.csv')
-data = df_2d.to_numpy()
-labels = data[:,-1]
-data = data[:, :2]
-
-num_clusters = 3
-gmm = GMM(num_components=num_clusters)
-gmm.fit(X=data)
-membership_probs = gmm.getMembership()
-print(membership_probs)
-print(gmm.getLikelihood(data))
-
-#  plotting the clusters with max prob
-cluster_assigns = np.argmax(membership_probs, axis=1)
-plt.figure(figsize=(8, 6))
-for j in range(num_clusters):  # assuming k=10
-    cluster_points = data[cluster_assigns == j]
-    plt.scatter(cluster_points[:, 0], cluster_points[:, 1], label=f'Cluster {j}')
-
-plt.title('K-Means Clustering')
-plt.xlabel('X')
-plt.ylabel('Y')
-plt.legend()
-# plt.savefig(f'gmm_clustering_k={num_clusters}.png')
-plt.show()
-
-
-
-
-#======================================6:PCA+CLustering============================================
-embeddings, labels = read_word_embeddings_data()
-
-### 6.1 : K-Means based on 2D Visualization
-# k2 = 4
-# kmeans = K_Means(k=k2)
-# kmeans.fit(features=embeddings)
-# cluster_assignments = kmeans.predict(data_features=embeddings) 
-# print_clusters(labels, cluster_assignments)
-
-# ### 6.2 : PCA + K-Means Clustering
-# plot_scree_plot(embeddings, n_components=50, outPath='embeddings_scree_plot_6_2.png')
-# opt_dims = 5
-# pca = PCA(num_components=opt_dims)
-# pca.fit(embeddings)
-# transform_feats = pca.transform(embeddings)
-
-# plot_k_vs_cost(embeddings=embeddings, outPath='pca_clustering_wcss_vs_k_6_2.png')
-# k_kmeans3 = 3
-# kmeans = K_Means(k=k_kmeans3)
-# kmeans.fit(features=transform_feats)
-# cluster_assignments = kmeans.predict(data_features=transform_feats) 
-# print_clusters(labels, cluster_assignments)
-
-# ### 6.3 : GMM based on 2D Visualization
-# gmm = GMM(num_components=k2)
-# gmm.fit(X=embeddings)
-# cluster_memberships = gmm.getMembership()
-
-# ### 6.4 : PCA + GMMs
-# plot_AIC_BIC_vs_k(embeddings=transform_feats, outPath='pca_gmm_aic_bic_vs_k_6_4.png')
-# k_kgmm3 = 1
-# gmm = GMM(num_components=k_kgmm3)
-# gmm.fit(X=embeddings)
-# cluster_memberships = gmm.getMembership()
-
-#======================================7:===========================================
-# @TODO
-
-#======================================8: Herarcy CLustering===========================================
-print("==================HC=================")
-k_best1 = 6
-k_best2 = 2
-
-linkage_matrix = hc.linkage(y=embeddings, method='ward', metric='euclidean')
-
-clusters_hc_kbest1 = hc.fcluster(linkage_matrix, t=k_best1, criterion='maxclust')
-clusters_hc_kbest2 = hc.fcluster(linkage_matrix, t=k_best2, criterion='maxclust')
-
-print_clusters(labels=labels, cluster_assignments=clusters_hc_kbest1)
-
-# dist_metrics=['euclidean', 'cosine', 'minkowski']
-# dist_methods=['single', 'complete', 'average', 'weighted', 'centroid', 'median', 'ward']
-
-# for mthd in dist_methods:
-#     if mthd == 'centroid' or mthd == 'median' or mthd == 'ward':
-#         plot_dendrogram(data=embeddings, dist_metric='euclidean', dist_method=mthd)
-#     else:
-#         for met in dist_metrics:
-#             plot_dendrogram(data=embeddings, dist_metric=met, dist_method=mthd)
-
-#======================================9: KNN+PCA===========================================
 def measure_inference_time(model, x_test) -> float:
     start_time = time.time()
     for x in x_test:
@@ -299,7 +163,141 @@ def plot_inference_time_for_different_models(x_train_red:np.ndarray, x_train:np.
     plt.ylabel('Inference Time (seconds)')
     plt.savefig('figures/knn_models_inf_time.png')
 
-    #### ploting scree plot for spotify dataset
+#======================================3: K-Means============================================
+DATA = "./data/external/"
+df = feather.read_feather(DATA + "word-embeddings.feather")
+# df dim : 200 x 2 where second coloumn is 512 dim vector embedding
+data = df.to_numpy()
+embeddings = np.vstack(data[:,-1])
+labels = np.vstack(data[:,:1])
+vit_embeddings = embeddings.astype(np.float64)
+
+## 3.1 WCSS v/s k plot
+# plot_k_vs_cost(embeddings=vit_embeddings, outPath='wcss_vs_k_plot_q1.png')
+
+## Kmeans for Optimal Number of Clusters
+k_kmeans1 = 7
+kmeans = K_Means(k=k_kmeans1)
+kmeans.fit(vit_embeddings)
+cluster_assigments = kmeans.predict(vit_embeddings)
+print_clusters(labels=labels, cluster_assignments=cluster_assigments)
+
+#======================================4: GMM============================================
+# plot_AIC_BIC_vs_k(vit_embeddings, 'gmm_aic_bic_plot.png')
+
+gmm = GMM(num_components=10)
+gmm.fit(X=vit_embeddings)
+
+gmm_skl = GaussianMixture(n_components=10)
+gmm_skl.fit(X=vit_embeddings)
+
+### plotting AIC,BIC v/s K 
+# plot_AIC_BIC_vs_k(embeddings=vit_embeddings,outPath='gmm_aic_bic_vs_k.png')
+
+# -------------------- GMM using k_gmm1 ----------------
+k_gmm1 = 1
+gmm = GMM(num_components=k_gmm1)
+gmm.fit(X=vit_embeddings)
+likelihood = gmm.getLikelihood(embeddings)
+membership_mat = gmm.getMembership()
+cluster_assignments = np.argmax(membership_mat, axis=1)
+print_clusters(labels=labels, cluster_assignments=cluster_assignments)
+
+
+
+#======================================5: PCA============================================
+
+## testing on 2D Dataset
+df_2d = pd.read_csv('./data/interim/a2/test.csv')
+data = df_2d.to_numpy()
+labels = data[:,-1]
+data = data[:, :2]
+
+num_clusters = 3
+gmm = GMM(num_components=num_clusters)
+gmm.fit(X=data)
+membership_probs = gmm.getMembership()
+print(membership_probs)
+print(gmm.getLikelihood(data))
+
+##  plotting the clusters with max prob
+cluster_assigns = np.argmax(membership_probs, axis=1)
+plt.figure(figsize=(8, 6))
+for j in range(num_clusters):  # assuming k=10
+    cluster_points = data[cluster_assigns == j]
+    plt.scatter(cluster_points[:, 0], cluster_points[:, 1], label=f'Cluster {j}')
+
+plt.title('K-Means Clustering')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.legend()
+# plt.savefig(f'gmm_clustering_k={num_clusters}.png')
+plt.show()
+
+
+
+
+#======================================6: PCA+CLustering============================================
+embeddings, labels = read_word_embeddings_data()
+
+## 6.1 : K-Means based on 2D Visualization
+# k2 = 4
+# kmeans = K_Means(k=k2)
+# kmeans.fit(features=embeddings)
+# cluster_assignments = kmeans.predict(data_features=embeddings) 
+# print_clusters(labels, cluster_assignments)
+
+# ## 6.2 : PCA + K-Means Clustering
+# plot_scree_plot(embeddings, n_components=50, outPath='embeddings_scree_plot_6_2.png')
+# opt_dims = 5
+# pca = PCA(num_components=opt_dims)
+# pca.fit(embeddings)
+# transform_feats = pca.transform(embeddings)
+
+# plot_k_vs_cost(embeddings=embeddings, outPath='pca_clustering_wcss_vs_k_6_2.png')
+# k_kmeans3 = 3
+# kmeans = K_Means(k=k_kmeans3)
+# kmeans.fit(features=transform_feats)
+# cluster_assignments = kmeans.predict(data_features=transform_feats) 
+# print_clusters(labels, cluster_assignments)
+
+# ## 6.3 : GMM based on 2D Visualization
+# gmm = GMM(num_components=k2)
+# gmm.fit(X=embeddings)
+# cluster_memberships = gmm.getMembership()
+
+# ## 6.4 : PCA + GMMs
+# plot_AIC_BIC_vs_k(embeddings=transform_feats, outPath='pca_gmm_aic_bic_vs_k_6_4.png')
+# k_kgmm3 = 1
+# gmm = GMM(num_components=k_kgmm3)
+# gmm.fit(X=embeddings)
+# cluster_memberships = gmm.getMembership()
+
+
+#======================================8: Herarcy CLustering===========================================
+print("==================HC=================")
+k_best1 = 6
+k_best2 = 2
+
+linkage_matrix = hc.linkage(y=embeddings, method='ward', metric='euclidean')
+
+clusters_hc_kbest1 = hc.fcluster(linkage_matrix, t=k_best1, criterion='maxclust')
+clusters_hc_kbest2 = hc.fcluster(linkage_matrix, t=k_best2, criterion='maxclust')
+
+print_clusters(labels=labels, cluster_assignments=clusters_hc_kbest1)
+
+# dist_metrics=['euclidean', 'cosine', 'minkowski']
+# dist_methods=['single', 'complete', 'average', 'weighted', 'centroid', 'median', 'ward']
+
+# for mthd in dist_methods:
+#     if mthd == 'centroid' or mthd == 'median' or mthd == 'ward':
+#         plot_dendrogram(data=embeddings, dist_metric='euclidean', dist_method=mthd)
+#     else:
+#         for met in dist_metrics:
+#             plot_dendrogram(data=embeddings, dist_metric=met, dist_method=mthd)
+
+#======================================9: KNN+PCA===========================================
+## ploting scree plot for spotify dataset
 df = pd.read_csv('./data/external/spotify.csv')
 df = df.drop_duplicates(subset='track_id', keep='first')
 df = df.drop(columns=['Unnamed: 0','track_id','artists','album_name','track_name'])
@@ -310,9 +308,9 @@ labels = data[:,-1]
 classes_list = np.unique(labels)
 
 norm_features = z_score_normalization(features)
-plot_scree_plot(norm_features, n_components=15, outPath='spotify_scree_plot.png')  
+plot_scree_plot(norm_features, n_components=15, outPath='spotify_screen_plot.png')  
 
-### Dimensionality Reduction on Spotify Dataset
+## Dimensionality Reduction on Spotify Dataset
 opt_dims = 5
 pca = PCA(num_components=opt_dims)
 pca.fit(norm_features)
@@ -344,7 +342,7 @@ print(f'Precision (micro) : {evaluation.precision_score(method="micro")}')
 print(f'Recall (micro): {evaluation.recall_score(method="micro")}')
 print(f'F1-Score (micro): {evaluation.f1_score(method="micro")}')
 
-#### 
+
 x_train_org = norm_features[:train_size]
 x_val_org = norm_features[train_size:train_size + val_size]
 # plot_inference_time_for_different_models(x_train=x_train_org, x_train_red=x_train, y_train=y_train, x_val=x_val_org, x_val_red=x_val)
