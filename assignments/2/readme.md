@@ -55,6 +55,3 @@ where:
 <p id="GMM512"></p>
 
 ## **4.2 GMM**
-
-### Issue Summary with Custom GMM Implementation
-
