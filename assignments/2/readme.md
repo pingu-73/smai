@@ -216,8 +216,6 @@ where $\bar{x}_i$ is the centroid of cluster $C_i$
 
 ### KNN on reduced dataset using the best_k and best_metric obtained in A1
 
-In A1 we obtained $best_k$ = 50 and $best_{metric}$ = Manhattan
-
 Metrics obtained for the complete spotify dataset in A1 are as follows:
 <center>
 
