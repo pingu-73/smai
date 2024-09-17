@@ -40,10 +40,10 @@
 $$ \text{WCSS} = \sum_{i=1}^K \sum_{x \in C_i} \| x - \mu_i \|^2 $$
 
 where:
-- $ K $ is the number of clusters,
-- $ C_i $ is the set of points in cluster $ i $,
-- $ \mu_i $ is the centroid of cluster $ i $,
-- $ x $ is a data point in cluster $ i $.
+- $K$ is the number of clusters,
+- $C_i$ is the set of points in cluster $i$,
+- $\mu_i$ is the centroid of cluster $i$,
+- $x$ is a data point in cluster $i$.
 
 > From the plot we can see that the elbow comes around $k = 7$ hence $k_{kmeans1} = 7$
 
