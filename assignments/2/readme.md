@@ -220,6 +220,10 @@ Metrics obtained for the complete spotify dataset in A1 are as follows:
 <center>
 
 ![](../2/figures/model_evluations_q9.png)
+</center>
+
+### **Inference time plot**
+<center>
 
 ![](../2/figures/knn_models_inf_time.png)
 </center>
