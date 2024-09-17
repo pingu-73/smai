@@ -85,3 +85,54 @@ Both criteria help in selecting the model with the best trade-off between fit an
 ![2dplot](../2/figures/pca_2d.png)
 ![3d plot](../2/figures/pca_3d.jpeg)
 </center>
+
+---
+
+<p id="PCAKMeans"></p>
+
+
+## **6 PCA + K-Mean**
+
+### **6.2**
+**Scree Plot for determining optimal number of dim**
+<center>
+
+![screeplot](../2/figures/spotify_screen_plot.png)
+
+![pca clustering wcss vs k](../2/figures/pca_clustering_wcss_vs_k_6_2.png)
+> From  we can see that the graph flattens out starting from PC 5 hence we take optimal number of dimensions to be 4
+</center>
+
+### **6.4 PCA + GMM**
+<center>
+
+![pca+gmm](../2/figures/pca_gmm_aic_bic_vs_k_6_4.png)
+Fig: AIC, BIC are reduced dataset with dim=4
+> From the plot we can see that both AIC abnd BIC are min for k~=4, hence $k_{gmm3}=1$
+</center> 
+
+<p id="ClusterAnalysis"></p>
+
+
+## 7.1 K-Means Cluster Analysis
+> On manual inspection of word clouds of clusters for different values of k as well as on inspecting the inertial (WCSS) and silhouette scores for K-Means clustering we can conclude that $k_{kmeans}=3$ since there is not much difference in inertia (considering 512 dimensions) and also it gives the highest silhouette score
+
+---
+
+
+
+## 7.2 GMM Cluster Analysis
+
+
+> On manual inspection of word clouds of clusters for different values of k as well as on inspecting the inertial (WCSS) and silhouette scores for GMM clustering we can conclude that $k_{gmm}=4$ since it gives the lowest inertial and highest silhouette score.
+
+
+
+## 7.3 GMM and K-Means Comparison
+> On manual inspection of word clouds of clusters formed for k_kmeans and k_gmm and by visually inspecting the clusters formed (fig 22 and 23) we see that K-Means produces better clusters (based on similarity between clusters and distance betweeen individual clusters)
+
+---
+
+<p id="HC"> </p>
+
+## 8 Hierarchical Clustering
