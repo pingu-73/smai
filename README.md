@@ -1,6 +1,6 @@
 # Statistical Methods in Artificial Intelligence (Monsoon '24)
 
-Name:
+Name: Dikshant
 
-Roll Number:
+Roll Number: 2022102038
 
