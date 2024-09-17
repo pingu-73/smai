@@ -6,39 +6,55 @@
 
 ## **Table of Contents**
 3. [K-Means](#KMeans)
-  
+
 4. [GMM](#GMM)
-  - [Optimal Number of Clusters for 512 dimensions using GMM](#GMM512)
-  - [AIC and BIC in GMM](#AICBIC)
-  - [GMM clustering using k = k_gmm1](#GMMKGMM1)
+
 5. [PCA](#PCA)
-  - [Visualising Dimensionality Reduction](#VisualisingReducedDataset)
-  - [Data Analysis](#DataAnalysis)
-  - [K-Means using k=k_2](#KMeansK2)
+ 
 6. [PCA + K-Means](#PCAKMeans)
-  - [Scree Plot for determining optimal number of dimensions](#ScreePlotFullDataset)
-  - [Elbow plot for reduced Dataset](#ElbowPlotReducedDataset)
-  - [K-Means using k=k_kmeans3](#KMeansKMeans3)
-  - [GMM using k_2](#GMMK2)
-  - [PCA + GMM](#PCAGMM)
-  - [GMM using k_gmm3](#GMMGMM3)
+
 7. [Cluster Analysis](#ClusterAnalysis)
-  - [K-Means Cluster Analysis](#KMeansClusterAnalysis)
-  - [GMM Cluster Analysis](#GMMClusterAnalysis)
-  - [GMM and K-Means Comparison](#GMMKMeans)
+  
 8. [Hierarchical Clustering](#HC)
-  - [Dendrogram Plots](#Dendrograms)
-  - [Comparing GMM, K-Means and HC](#GMMKMeansHC)
+ 
 9. [Nearest Neighbor Search - Spotify Dataset](#Spotify)
-  - [PCA + KNN](#PCAKNN)
-  - [KNN on reduced dataset using the best_k and best_metric obtained in A1](#Evaluation)
 
 ---
 
+<p id = "KMeans"> </p>
+
+<p id = "ElbowPlot512"> </p>
+
 ## **3.2 Optimal Number of Clusters for 512 dimensions using K-Means**
+
 <center>
-![Elbow Plot full Dataset](./figures/wcss_vs_k_plot_q1.png)
+
+![Elbow Plot](../2/figures/wcss_vs_k_plot_q1.png)
+
 *Figure 1: Elbow plot for the original 512 dimensional dataset*
+
 </center>
 
-An **elbow plot** helps determine the optimal number of clusters for K-means clustering by plotting the within-cluster sum of squares (WCSS) against the number of clusters. The optimal `K` is typically found at the "elbow" point, where adding more clusters yields only marginal improvements.
+**Elbow plot** helps in determining the optimal number of clusters for K-means clustering by plotting the within-cluster sum of squares (WCSS) against number of clusters. The optimal `K` is typically found at the "elbow" point, where adding more clusters yields only marginal improvements.
+
+$$ \text{WCSS} = \sum_{i=1}^K \sum_{x \in C_i} \| x - \mu_i \|^2 $$
+
+where:
+- $ K $ is the number of clusters,
+- $ C_i $ is the set of points in cluster $ i $,
+- $ \mu_i $ is the centroid of cluster $ i $,
+- $ x $ is a data point in cluster $ i $.
+
+> From the plot we can see that the elbow comes around $k = 7$ hence $k_{kmeans1} = 7$
+
+>Note: Not always the best method: The elbow method might <span style="color: red;"><u>not be suitable</u></span> for all datasets, especially for those with <span style="color: red;"><u>high dimensionality</u></span> or clusters of irregular shapes. Hence if you see the graph it is very difficult to identify the elbow point.
+---
+
+<p id="GMM"></p>
+
+<p id="GMM512"></p>
+
+## **4.2 GMM**
+
+### Issue Summary with Custom GMM Implementation
+
