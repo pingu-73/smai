@@ -101,7 +101,27 @@ Both criteria help in selecting the model with the best trade-off between fit an
 
 ![pca clustering wcss vs k](../2/figures/pca_clustering_wcss_vs_k_6_2.png)
 > From  we can see that the graph flattens out starting from PC 5 hence we take optimal number of dimensions to be 4
+</br>
+>  we can see that the elbow point comes at 6 for the reduced dataset hence $k_{kmeans3}=6$
 </center>
+
+Output:
+```
+KMeans with k = 6
+
+        Time taken to fit: 0.0109 s
+        Epochs taken to fit: 11
+        Final Cost: 270.88563
+```
+
+## 6.3 GMM using $k_2$
+Output:
+```
+GMM using k = 3
+
+        Time taken to fit: 0.05756 s
+        Final Log Likelihood: 522696.84323
+```
 
 ### **6.4 PCA + GMM**
 <center>
@@ -110,6 +130,15 @@ Both criteria help in selecting the model with the best trade-off between fit an
 Fig: AIC, BIC are reduced dataset with dim=4
 > From the plot we can see that both AIC abnd BIC are min for k~=4, hence $k_{gmm3}=1$
 </center> 
+
+Output:
+```
+GMM with k = 4
+
+        Time taken to fit: 0.00355 s
+        Final Log Likelihood: -967.78703
+```
+
 
 <p id="ClusterAnalysis"></p>
 
