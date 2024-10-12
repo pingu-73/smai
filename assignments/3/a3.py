@@ -4,25 +4,6 @@ import numpy as np
 import seaborn as sns
 import warnings
 import sys, os
-warnings.filterwarnings('ignore')
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
-from models.mlp.mlp import MLP
-from helper import onehot_encoding, Analysis, Data_preparation, train_and_evaluate
-
-
-
- # Alternatively, you can use pickle:
- # with open("best_mlp_model.pkl", "wb") as f:
-#     pickle.dump(best_model, f)
-
-# ### ================================================================================================
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-import seaborn as sns
-import warnings
-import sys, os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import accuracy_score, f1_score, classification_report
