@@ -6,13 +6,17 @@ import warnings, sys, os
 import wandb
 import joblib
 from itertools import product
+from sklearn.model_selection import train_test_split
+from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, MultiLabelBinarizer
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, hamming_loss, classification_report
 warnings.filterwarnings('ignore')
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from models.mlp.mlp import MLP
 from performance_measures.MLPPerformance import PerformanceMatrix
+from models.mlp.mlp_multi import MLP_MULTI
 
 def onehot_encoding(y):
     num_classes = y.max() + 1
@@ -326,3 +330,50 @@ def evaluate_best_model(X_test, y_test, file_path):
     print(report)
     print("\nConfusion Matrix:")
     print(matrix)
+
+
+
+def data_prep(data):
+    data.drop_duplicates(inplace=True)
+
+    numeric_columns = data.select_dtypes(include=[np.number]).columns
+    categorical_columns = data.select_dtypes(exclude=[np.number]).columns.drop('labels')
+
+    numeric_imputer = SimpleImputer(strategy='mean')
+    data[numeric_columns] = numeric_imputer.fit_transform(data[numeric_columns])
+
+    categorical_imputer = SimpleImputer(strategy='most_frequent')
+    data[categorical_columns] = categorical_imputer.fit_transform(data[categorical_columns])
+
+    X = data.drop(['labels'], axis=1)
+    y = data['labels'].str.split()
+
+    X = pd.get_dummies(X, columns=categorical_columns)
+
+    scaler = StandardScaler()
+    X[numeric_columns] = scaler.fit_transform(X[numeric_columns])
+
+    mlb = MultiLabelBinarizer()
+    y = mlb.fit_transform(y)
+
+    # Split the data
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Convert to numpy arrays
+    X_train = X_train.values
+    X_test = X_test.values
+
+    return X_train, X_test, y_train, y_test
+
+
+def evaluate_model(model, X, y):
+    predictions = model.predict(X)
+    predictions_binary = (predictions > 0.5).astype(int)
+    
+    accuracy = accuracy_score(y, predictions_binary)
+    precision = precision_score(y, predictions_binary, average='samples')
+    recall = recall_score(y, predictions_binary, average='samples')
+    f1 = f1_score(y, predictions_binary, average='samples')
+    hamming = hamming_loss(y, predictions_binary)
+    
+    return accuracy, precision, recall, f1, hamming
