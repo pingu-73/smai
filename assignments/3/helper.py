@@ -296,3 +296,41 @@ def Quest_two_three_part_2(X_train, y_train, X_test, y_test, input_size, output_
 
     # Finish the W&B run
     wandb.finish()
+
+
+def evaluate_best_model(X_test, y_test, file_path):
+    # Load the best model
+    best_model = joblib.load(file_path)
+
+    # Make predictions
+    y_pred = best_model.predict(X_test)
+    y_test_labels = np.argmax(y_test, axis=1)
+    y_pred_labels = np.argmax(y_pred, axis=1)
+
+    # Calculate performance metrics
+    performance = PerformanceMatrix(y_test_labels, y_pred_labels)
+    accuracy = performance.accuracy_score()
+    precision = performance.precision_score()
+    recall = performance.recall_score()
+    f1 = performance.f1_score()
+    report = performance.classification_report()
+    matrix = performance.confusion_matrix()
+
+    # Print results
+    print("Best Model Performance:")
+    print(f"Accuracy: {accuracy}")
+    print(f"Precision: {precision}")
+    print(f"Recall: {recall}")
+    print(f"F1 Score: {f1}")
+    print("\nClassification Report:")
+    print(report)
+    print("\nConfusion Matrix:")
+    print(matrix)
+
+    # Optionally, you can also plot the confusion matrix
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(matrix, annot=True, fmt='d', cmap='Blues')
+    plt.title('Confusion Matrix')
+    plt.xlabel('Predicted')
+    plt.ylabel('Actual')
+    plt.show()

@@ -30,7 +30,7 @@ from sklearn.metrics import accuracy_score, f1_score, classification_report
 warnings.filterwarnings('ignore')
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
-from helper import onehot_encoding, Analysis, Data_preparation, train_and_evaluate, Quest_two_three, Quest_two_three_part_2
+from helper import onehot_encoding, Analysis, Data_preparation, train_and_evaluate, Quest_two_three, Quest_two_three_part_2, evaluate_best_model
 
 file_path = "./data/external/WineQT.csv"
 df = pd.read_csv(file_path)
@@ -38,6 +38,8 @@ df = Analysis(df)
 X, y, X_train, X_test, y_train, y_test = Data_preparation(df)
 input_size = X.shape[1]
 output_size = y_train.shape[1]
-train_and_evaluate(X_train, y_train, X_test, y_test, input_size, output_size)
+# train_and_evaluate(X_train, y_train, X_test, y_test, input_size, output_size)
 # Quest_two_three(X_train, y_train, X_test, y_test, input_size, output_size)
 # Quest_two_three_part_2(X_train, y_train, X_test, y_test, input_size, output_size)
+best_model_path = "./data/interim/best_mlp_model.pkl"
+evaluate_best_model(X_test, y_test,file_path=best_model_path)

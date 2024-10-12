@@ -143,3 +143,33 @@ Best Accuracy: 0.6244541484716157 with parameters: {'epochs': 150, 'learning_rat
 
 ![best model](../3/figures/2.3_mlp_best_model.png)
 </center>
+
+## 2.4 Best Model Analysis
+```
+Best Model Performance:
+Accuracy: 0.6593886462882096
+Precision: 0.6062367423687839
+Recall: 0.6593886462882096
+F1 Score: 0.6271040448254205
+
+Classification Report:
+Class        Precision  Recall     F1-Score   Support
+1            0.00       0.00       0.00       2
+2            0.00       0.00       0.00       9
+3            0.72       0.90       0.80       107
+4            0.64       0.56       0.60       82
+5            0.39       0.36       0.37       25
+6            0.00       0.00       0.00       4
+
+accuracy                           0.66       229
+macro avg    0.29       0.30       0.29       229
+weighted avg 0.61       0.66       0.63       229
+
+Confusion Matrix:
+[[ 0  0  2  0  0  0]
+ [ 0  0  7  2  0  0]
+ [ 0  0 96  9  2  0]
+ [ 0  0 27 46  9  0]
+ [ 0  0  2 14  9  0]
+ [ 0  0  0  1  3  0]]
+```
