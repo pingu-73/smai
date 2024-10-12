@@ -28,7 +28,7 @@ from sklearn.metrics import accuracy_score, f1_score, classification_report
 warnings.filterwarnings('ignore')
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
-from models.mlp.mlp import MLP
+from helper import onehot_encoding, Analysis, Data_preparation, train_and_evaluate
 
 file_path = "./data/external/WineQT.csv"
 df = pd.read_csv(file_path)
