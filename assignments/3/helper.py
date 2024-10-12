@@ -326,11 +326,3 @@ def evaluate_best_model(X_test, y_test, file_path):
     print(report)
     print("\nConfusion Matrix:")
     print(matrix)
-
-    # Optionally, you can also plot the confusion matrix
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(matrix, annot=True, fmt='d', cmap='Blues')
-    plt.title('Confusion Matrix')
-    plt.xlabel('Predicted')
-    plt.ylabel('Actual')
-    plt.show()
