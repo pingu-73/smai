@@ -1,0 +1,32 @@
+{
+  "os":  "macOS-14.5-arm64-arm-64bit",
+  "python":  "3.12.7",
+  "startedAt":  "2024-10-12T11:02:21.313008Z",
+  "program":  "/Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/assignments/3/a3.py",
+  "codePath":  "assignments/3/a3.py",
+  "git":  {
+    "remote":  "https://github.com/smai-monsoon-24/smai-m24-assignments-pingu-73.git",
+    "commit":  "5072631f4d65c3073384bf4dd957a2835ac5707b"
+  },
+  "email":  "dikshant.073@gmail.com",
+  "root":  "/Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73",
+  "host":  "Dikshants-MacBook-Air.local",
+  "username":  "dikshant",
+  "executable":  "/Users/dikshant/Desktop/college/smai/env/bin/python3",
+  "codePathLocal":  "assignments/3/a3.py",
+  "cpu_count":  8,
+  "cpu_count_logical":  8,
+  "disk":  {
+    "/":  {
+      "total":  "245107195904",
+      "used":  "118124007424"
+    }
+  },
+  "memory":  {
+    "total":  "8589934592"
+  },
+  "cpu":  {
+    "count":  8,
+    "countLogical":  8
+  }
+}

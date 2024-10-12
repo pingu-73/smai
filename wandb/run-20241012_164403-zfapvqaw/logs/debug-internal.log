@@ -1,0 +1,21 @@
+{"time":"2024-10-12T16:44:03.330521+05:30","level":"INFO","msg":"using version","core version":"0.18.3"}
+{"time":"2024-10-12T16:44:03.330581+05:30","level":"INFO","msg":"created symlink","path":"/Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/wandb/run-20241012_164403-zfapvqaw/logs/debug-core.log"}
+{"time":"2024-10-12T16:44:03.330782+05:30","level":"ERROR","msg":"dialing: google: could not find default credentials. See https://cloud.google.com/docs/authentication/external/set-up-adc for more information"}
+{"time":"2024-10-12T16:44:03.340507+05:30","level":"INFO","msg":"created new stream","id":"zfapvqaw"}
+{"time":"2024-10-12T16:44:03.340569+05:30","level":"INFO","msg":"stream: started","id":"zfapvqaw"}
+{"time":"2024-10-12T16:44:03.340571+05:30","level":"INFO","msg":"handler: started","stream_id":{"value":"zfapvqaw"}}
+{"time":"2024-10-12T16:44:03.340587+05:30","level":"INFO","msg":"sender: started","stream_id":{"value":"zfapvqaw"}}
+{"time":"2024-10-12T16:44:03.340651+05:30","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"zfapvqaw"}}
+{"time":"2024-10-12T16:44:03.732251+05:30","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-10-12T16:44:03.732637+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-10-12T16:44:13.756777+05:30","level":"ERROR","msg":"monitor: gpu: error sampling metrics: signal: trace/BPT trap"}
+{"time":"2024-10-12T16:44:23.758767+05:30","level":"ERROR","msg":"monitor: gpu: error sampling metrics: signal: trace/BPT trap"}
+{"time":"2024-10-12T16:44:33.759482+05:30","level":"ERROR","msg":"monitor: gpu: error sampling metrics: signal: trace/BPT trap"}
+{"time":"2024-10-12T16:44:35.617909+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-10-12T16:44:35.617943+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-10-12T16:44:37.778825+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-10-12T16:44:39.179033+05:30","level":"INFO","msg":"stream: closing","id":"zfapvqaw"}
+{"time":"2024-10-12T16:44:39.179115+05:30","level":"INFO","msg":"handler: closed","stream_id":{"value":"zfapvqaw"}}
+{"time":"2024-10-12T16:44:39.179151+05:30","level":"INFO","msg":"sender: closed","stream_id":{"value":"zfapvqaw"}}
+{"time":"2024-10-12T16:44:39.17914+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"zfapvqaw"}}
+{"time":"2024-10-12T16:44:39.179895+05:30","level":"INFO","msg":"stream: closed","id":"zfapvqaw"}

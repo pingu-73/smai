@@ -1,0 +1,20 @@
+[34m[1mwandb[0m: [32m[41mERROR[0m Attempted to change value of key "activation" from sigmoid to relu
+[34m[1mwandb[0m: [32m[41mERROR[0m If you really want to do this, pass allow_val_change=True to config.update()
+Traceback (most recent call last):
+  File "/Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/assignments/3/a3.py", line 42, in <module>
+    Quest_two_three(X_train, y_train, X_test, y_test, input_size, output_size)
+  File "/Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/assignments/3/helper.py", line 221, in Quest_two_three
+    wandb.config.update({
+  File "/Users/dikshant/Desktop/college/smai/env/lib/python3.12/site-packages/wandb/sdk/wandb_config.py", line 187, in update
+    sanitized = self._update(d, allow_val_change)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/dikshant/Desktop/college/smai/env/lib/python3.12/site-packages/wandb/sdk/wandb_config.py", line 180, in _update
+    sanitized = self._sanitize_dict(
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/dikshant/Desktop/college/smai/env/lib/python3.12/site-packages/wandb/sdk/wandb_config.py", line 267, in _sanitize_dict
+    k, v = self._sanitize(k, v, allow_val_change)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/dikshant/Desktop/college/smai/env/lib/python3.12/site-packages/wandb/sdk/wandb_config.py", line 288, in _sanitize
+    raise config_util.ConfigError(
+wandb.sdk.lib.config_util.ConfigError: Attempted to change value of key "activation" from sigmoid to relu
+If you really want to do this, pass allow_val_change=True to config.update()

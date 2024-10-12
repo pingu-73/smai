@@ -1,0 +1,86 @@
+2024-10-12 17:06:21,876 INFO    MainThread:19028 [wandb_setup.py:_flush():79] Current SDK version is 0.18.3
+2024-10-12 17:06:21,876 INFO    MainThread:19028 [wandb_setup.py:_flush():79] Configure stats pid to 19028
+2024-10-12 17:06:21,876 INFO    MainThread:19028 [wandb_setup.py:_flush():79] Loading settings from /Users/dikshant/.config/wandb/settings
+2024-10-12 17:06:21,876 INFO    MainThread:19028 [wandb_setup.py:_flush():79] Loading settings from /Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/wandb/settings
+2024-10-12 17:06:21,876 INFO    MainThread:19028 [wandb_setup.py:_flush():79] Loading settings from environment variables: {}
+2024-10-12 17:06:21,876 INFO    MainThread:19028 [wandb_setup.py:_flush():79] Applying setup settings: {'mode': None, '_disable_service': None}
+2024-10-12 17:06:21,876 INFO    MainThread:19028 [wandb_setup.py:_flush():79] Inferring run settings from compute environment: {'program_relpath': 'assignments/3/a3.py', 'program_abspath': '/Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/assignments/3/a3.py', 'program': '/Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/assignments/3/a3.py'}
+2024-10-12 17:06:21,876 INFO    MainThread:19028 [wandb_setup.py:_flush():79] Applying login settings: {}
+2024-10-12 17:06:21,876 INFO    MainThread:19028 [wandb_init.py:_log_setup():532] Logging user logs to /Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/wandb/run-20241012_170621-jqjq2bom/logs/debug.log
+2024-10-12 17:06:21,877 INFO    MainThread:19028 [wandb_init.py:_log_setup():533] Logging internal logs to /Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/wandb/run-20241012_170621-jqjq2bom/logs/debug-internal.log
+2024-10-12 17:06:21,877 INFO    MainThread:19028 [wandb_init.py:init():617] calling init triggers
+2024-10-12 17:06:21,877 INFO    MainThread:19028 [wandb_init.py:init():624] wandb.init called with sweep_config: {}
+config: {}
+2024-10-12 17:06:21,877 INFO    MainThread:19028 [wandb_init.py:init():667] starting backend
+2024-10-12 17:06:21,877 INFO    MainThread:19028 [wandb_init.py:init():671] sending inform_init request
+2024-10-12 17:06:21,878 INFO    MainThread:19028 [backend.py:_multiprocessing_setup():104] multiprocessing start_methods=spawn,fork,forkserver, using: spawn
+2024-10-12 17:06:21,878 INFO    MainThread:19028 [wandb_init.py:init():684] backend started and connected
+2024-10-12 17:06:21,882 INFO    MainThread:19028 [wandb_init.py:init():779] updated telemetry
+2024-10-12 17:06:21,903 INFO    MainThread:19028 [wandb_init.py:init():812] communicating run to backend with 90.0 second timeout
+2024-10-12 17:06:22,300 INFO    MainThread:19028 [wandb_init.py:init():863] starting run threads in backend
+2024-10-12 17:06:22,391 INFO    MainThread:19028 [wandb_run.py:_console_start():2465] atexit reg
+2024-10-12 17:06:22,391 INFO    MainThread:19028 [wandb_run.py:_redirect():2313] redirect: wrap_raw
+2024-10-12 17:06:22,392 INFO    MainThread:19028 [wandb_run.py:_redirect():2378] Wrapping output streams.
+2024-10-12 17:06:22,392 INFO    MainThread:19028 [wandb_run.py:_redirect():2403] Redirects installed.
+2024-10-12 17:06:22,393 INFO    MainThread:19028 [wandb_init.py:init():907] run started, returning control to user process
+2024-10-12 17:06:22,394 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.001, 'hidden_size': 50, 'activation': 'sigmoid'}
+2024-10-12 17:06:33,107 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.001, 'hidden_size': 50, 'activation': 'relu'}
+2024-10-12 17:06:43,854 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.001, 'hidden_size': 100, 'activation': 'sigmoid'}
+2024-10-12 17:06:55,038 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.001, 'hidden_size': 100, 'activation': 'relu'}
+2024-10-12 17:07:06,249 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.001, 'hidden_size': 150, 'activation': 'sigmoid'}
+2024-10-12 17:07:17,902 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.001, 'hidden_size': 150, 'activation': 'relu'}
+2024-10-12 17:07:29,506 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.01, 'hidden_size': 50, 'activation': 'sigmoid'}
+2024-10-12 17:07:40,110 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.01, 'hidden_size': 50, 'activation': 'relu'}
+2024-10-12 17:07:50,825 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.01, 'hidden_size': 100, 'activation': 'sigmoid'}
+2024-10-12 17:08:01,996 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.01, 'hidden_size': 100, 'activation': 'relu'}
+2024-10-12 17:08:13,094 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.01, 'hidden_size': 150, 'activation': 'sigmoid'}
+2024-10-12 17:08:24,705 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.01, 'hidden_size': 150, 'activation': 'relu'}
+2024-10-12 17:08:36,143 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.1, 'hidden_size': 50, 'activation': 'sigmoid'}
+2024-10-12 17:08:46,724 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.1, 'hidden_size': 50, 'activation': 'relu'}
+2024-10-12 17:08:57,420 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.1, 'hidden_size': 100, 'activation': 'sigmoid'}
+2024-10-12 17:09:08,519 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.1, 'hidden_size': 100, 'activation': 'relu'}
+2024-10-12 17:09:19,592 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.1, 'hidden_size': 150, 'activation': 'sigmoid'}
+2024-10-12 17:09:31,150 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 50, 'learning_rate': 0.1, 'hidden_size': 150, 'activation': 'relu'}
+2024-10-12 17:09:42,605 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.001, 'hidden_size': 50, 'activation': 'sigmoid'}
+2024-10-12 17:10:03,764 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.001, 'hidden_size': 50, 'activation': 'relu'}
+2024-10-12 17:10:25,093 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.001, 'hidden_size': 100, 'activation': 'sigmoid'}
+2024-10-12 17:10:47,224 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.001, 'hidden_size': 100, 'activation': 'relu'}
+2024-10-12 17:11:09,435 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.001, 'hidden_size': 150, 'activation': 'sigmoid'}
+2024-10-12 17:11:32,570 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.001, 'hidden_size': 150, 'activation': 'relu'}
+2024-10-12 17:11:55,563 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.01, 'hidden_size': 50, 'activation': 'sigmoid'}
+2024-10-12 17:12:16,834 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.01, 'hidden_size': 50, 'activation': 'relu'}
+2024-10-12 17:12:38,207 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.01, 'hidden_size': 100, 'activation': 'sigmoid'}
+2024-10-12 17:13:00,432 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.01, 'hidden_size': 100, 'activation': 'relu'}
+2024-10-12 17:13:22,649 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.01, 'hidden_size': 150, 'activation': 'sigmoid'}
+2024-10-12 17:13:45,897 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.01, 'hidden_size': 150, 'activation': 'relu'}
+2024-10-12 17:14:08,928 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.1, 'hidden_size': 50, 'activation': 'sigmoid'}
+2024-10-12 17:14:30,210 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.1, 'hidden_size': 50, 'activation': 'relu'}
+2024-10-12 17:14:51,648 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.1, 'hidden_size': 100, 'activation': 'sigmoid'}
+2024-10-12 17:15:13,926 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.1, 'hidden_size': 100, 'activation': 'relu'}
+2024-10-12 17:15:36,169 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.1, 'hidden_size': 150, 'activation': 'sigmoid'}
+2024-10-12 17:15:59,265 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 100, 'learning_rate': 0.1, 'hidden_size': 150, 'activation': 'relu'}
+2024-10-12 17:16:22,250 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.001, 'hidden_size': 50, 'activation': 'sigmoid'}
+2024-10-12 17:16:54,126 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.001, 'hidden_size': 50, 'activation': 'relu'}
+2024-10-12 17:17:26,379 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.001, 'hidden_size': 100, 'activation': 'sigmoid'}
+2024-10-12 17:17:59,819 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.001, 'hidden_size': 100, 'activation': 'relu'}
+2024-10-12 17:18:33,203 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.001, 'hidden_size': 150, 'activation': 'sigmoid'}
+2024-10-12 17:19:08,028 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.001, 'hidden_size': 150, 'activation': 'relu'}
+2024-10-12 17:19:42,635 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.01, 'hidden_size': 50, 'activation': 'sigmoid'}
+2024-10-12 17:20:14,559 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.01, 'hidden_size': 50, 'activation': 'relu'}
+2024-10-12 17:20:46,707 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.01, 'hidden_size': 100, 'activation': 'sigmoid'}
+2024-10-12 17:21:20,721 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.01, 'hidden_size': 100, 'activation': 'relu'}
+2024-10-12 17:21:54,323 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.01, 'hidden_size': 150, 'activation': 'sigmoid'}
+2024-10-12 17:22:29,099 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.01, 'hidden_size': 150, 'activation': 'relu'}
+2024-10-12 17:23:03,710 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.1, 'hidden_size': 50, 'activation': 'sigmoid'}
+2024-10-12 17:23:35,467 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.1, 'hidden_size': 50, 'activation': 'relu'}
+2024-10-12 17:24:07,470 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.1, 'hidden_size': 100, 'activation': 'sigmoid'}
+2024-10-12 17:24:40,697 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.1, 'hidden_size': 100, 'activation': 'relu'}
+2024-10-12 17:25:13,909 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.1, 'hidden_size': 150, 'activation': 'sigmoid'}
+2024-10-12 17:25:48,452 INFO    MainThread:19028 [wandb_run.py:_config_callback():1394] config_cb None None {'epochs': 150, 'learning_rate': 0.1, 'hidden_size': 150, 'activation': 'relu'}
+2024-10-12 17:26:30,559 INFO    MainThread:19028 [wandb_run.py:_finish():2164] finishing run pingu-73/New_Q2.3/jqjq2bom
+2024-10-12 17:26:30,559 INFO    MainThread:19028 [wandb_run.py:_atexit_cleanup():2428] got exitcode: 0
+2024-10-12 17:26:30,559 INFO    MainThread:19028 [wandb_run.py:_restore():2410] restore
+2024-10-12 17:26:30,560 INFO    MainThread:19028 [wandb_run.py:_restore():2416] restore done
+2024-10-12 17:26:44,523 INFO    MainThread:19028 [wandb_run.py:_footer_history_summary_info():4049] rendering history
+2024-10-12 17:26:44,526 INFO    MainThread:19028 [wandb_run.py:_footer_history_summary_info():4081] rendering summary
+2024-10-12 17:26:44,537 INFO    MainThread:19028 [wandb_run.py:_footer_sync_info():4008] logging synced files

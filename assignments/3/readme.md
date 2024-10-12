@@ -135,3 +135,11 @@ Gradient check passed: False
 The Gradient check is failing during this testing it's becasue the gradient computed numeracilly do not match with gradient computed analytically during backpropagation. I suspect the reason for gradient failure in this step is that activation functions are facing an exploding gradient issue.
 
 ## 2.3 Hyperparameter Tuning
+Best Model's Details:
+```
+Best Accuracy: 0.6244541484716157 with parameters: {'epochs': 150, 'learning_rate': 0.1, 'hidden_size': 100, 'activation': 'sigmoid'}
+```
+<center>
+
+![best model](../3/figures/2.3_mlp_best_model.png)
+</center>

@@ -1,0 +1,1 @@
+Best Accuracy: 0.5982532751091703 with parameters: {'epochs': 150, 'learning_rate': 0.01, 'hidden_size': 50, 'activation': 'relu'}
