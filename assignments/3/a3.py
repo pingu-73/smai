@@ -68,7 +68,7 @@ print(f"Recall: {recall:.2f}")
 print(f"F-1 score: {f1:.2f}") 
 
 
-### ------- Question: 3
+## ------- Question: 3
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
 df = pd.read_csv("./data/external/HousingData.csv")
@@ -267,3 +267,137 @@ print(f"Test RMSE: {rms_test:.4f}")
 # wandb.finish()
 
 #############
+
+
+############## Question 3.4
+# from sklearn.metrics import mean_absolute_error
+# from sklearn.impute import SimpleImputer
+
+# hyperparameter_space = {
+#     'hidden_layer_sizes': {
+#         'values': [(50,), (100,), (50, 50), (100, 50)]  # Example hidden layer sizes
+#     },
+#     'activation': {
+#         'values': ['relu', 'tanh']  # Example activation functions
+#     },
+#     'learning_rate': {
+#         'min': 0.0001,
+#         'max': 0.1
+#     },
+#     'alpha': {
+#         'min': 0.0001,
+#         'max': 0.1
+#     },
+#     'batch_size': {
+#         'values': [16, 32, 64]  # Example batch sizes
+#     },
+#     'max_iter': {
+#         'value': 500  # Example maximum iterations
+#     },
+#     'early_stopping': {
+#         'value': True  # Example for early stopping
+#     },
+#     'validation_split': {
+#         'value': 0.2  # Example for validation split
+#     },
+#     'patience': {
+#         'value': 10  # Example patience for early stopping
+#     }
+# }
+
+# wandb.init(project="Question-3")
+
+# df = pd.read_csv("./data/external/HousingData.csv")
+
+# imputer = SimpleImputer(strategy='median')
+# df_imputed = pd.DataFrame(imputer.fit_transform(df), columns=df.columns)
+
+# df_imputed['CHAS'] = df_imputed['CHAS'].astype(int)
+# df_imputed['RM_squared'] = df_imputed['RM'] ** 2
+# df_imputed['LSTAT_squared'] = df_imputed['LSTAT'] ** 2
+# df_imputed['PTRATIO_squared'] = df_imputed['PTRATIO'] ** 2
+
+# Y = df_imputed['MEDV'].copy()
+# X = df_imputed.drop(columns=['MEDV'])
+
+# Y_mean, Y_std = Y.mean(), Y.std()
+# Y = (Y - Y_mean) / Y_std
+# scaler = StandardScaler()
+# X_scaled = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
+
+# X_train, X_test, y_train, y_test = train_test_split(X_scaled.values, Y.values.reshape(-1, 1), test_size=0.2, random_state=42)
+
+# results = []
+
+# def train_and_log_model(params):
+#     wandb.config.update(params, allow_val_change=True)
+    
+#     mlp = MLPRegression(
+#         hidden_layer_sizes=params['hidden_layer_sizes'],
+#         activation=params['activation'],
+#         learning_rate=params['learning_rate'],
+#         max_iter=params['max_iter'],
+#         early_stopping=params['early_stopping'],
+#         validation_split=params['validation_split'],
+#         patience=params['patience'],
+#         alpha=params['alpha'],
+#         batch_size=params['batch_size']
+#     )
+
+#     mlp.fit(X_train, y_train)
+
+#     y_pred_train = mlp.predict(X_train)
+#     y_pred_test = mlp.predict(X_test)
+
+#     mse_train = mean_squared_error(y_train, y_pred_train)
+#     mse_test = mean_squared_error(y_test, y_pred_test)
+#     mae_test = mean_absolute_error(y_test, y_pred_test)
+#     r2_train = r2_score(y_train, y_pred_train)
+#     r2_test = r2_score(y_test, y_pred_test)
+#     rms_train = np.sqrt(mse_train)
+#     rms_test = np.sqrt(mse_test)
+
+#     wandb.log({
+#         "Train MSE": mse_train,
+#         "Test MSE": mse_test,
+#         "Train RMSE": rms_train,
+#         "Test RMSE": rms_test,
+#         "Train MAE": mean_absolute_error(y_train, y_pred_train),
+#         "Test MAE": mae_test,
+#         "Train R_squared": r2_train,
+#         "Test R_squared": r2_test,
+#         "Parameters": params
+#     })
+
+#     results.append({
+#         "params": params,
+#         "test_mse": mse_test,
+#         "test_mae": mae_test
+#     })
+
+# for hidden_layer_sizes in hyperparameter_space['hidden_layer_sizes']['values']:
+#     for activation in hyperparameter_space['activation']['values']:
+#         learning_rate = np.random.uniform(hyperparameter_space['learning_rate']['min'], hyperparameter_space['learning_rate']['max'])
+#         alpha = np.random.uniform(hyperparameter_space['alpha']['min'], hyperparameter_space['alpha']['max'])
+#         for batch_size in hyperparameter_space['batch_size']['values']:
+#             params = {
+#                 'hidden_layer_sizes': hidden_layer_sizes,
+#                 'activation': activation,
+#                 'learning_rate': learning_rate,
+#                 'max_iter': hyperparameter_space['max_iter']['value'],
+#                 'early_stopping': hyperparameter_space['early_stopping']['value'],
+#                 'validation_split': hyperparameter_space['validation_split']['value'],
+#                 'patience': hyperparameter_space['patience']['value'],
+#                 'alpha': alpha,
+#                 'batch_size': batch_size
+#             }
+#             train_and_log_model(params)
+
+# best_model = min(results, key=lambda x: x["test_mse"])
+
+# print("Best Model Parameters:", best_model["params"])
+# print("Best Model Test MSE:", best_model["test_mse"])
+# print("Best Model Test MAE:", best_model["test_mae"])
+
+# wandb.finish()
+##############

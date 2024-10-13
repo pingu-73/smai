@@ -1,0 +1,18 @@
+{"time":"2024-10-13T22:20:20.545855+05:30","level":"INFO","msg":"using version","core version":"0.18.3"}
+{"time":"2024-10-13T22:20:20.545931+05:30","level":"INFO","msg":"created symlink","path":"/Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/wandb/run-20241013_222020-ya4157ut/logs/debug-core.log"}
+{"time":"2024-10-13T22:20:20.550627+05:30","level":"ERROR","msg":"dialing: google: could not find default credentials. See https://cloud.google.com/docs/authentication/external/set-up-adc for more information"}
+{"time":"2024-10-13T22:20:20.561834+05:30","level":"INFO","msg":"created new stream","id":"ya4157ut"}
+{"time":"2024-10-13T22:20:20.5619+05:30","level":"INFO","msg":"stream: started","id":"ya4157ut"}
+{"time":"2024-10-13T22:20:20.561906+05:30","level":"INFO","msg":"handler: started","stream_id":{"value":"ya4157ut"}}
+{"time":"2024-10-13T22:20:20.56194+05:30","level":"INFO","msg":"sender: started","stream_id":{"value":"ya4157ut"}}
+{"time":"2024-10-13T22:20:20.56198+05:30","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"ya4157ut"}}
+{"time":"2024-10-13T22:20:20.956841+05:30","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-10-13T22:20:20.958154+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-10-13T22:20:22.632332+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-10-13T22:20:22.632362+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-10-13T22:20:26.913164+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-10-13T22:20:28.337968+05:30","level":"INFO","msg":"stream: closing","id":"ya4157ut"}
+{"time":"2024-10-13T22:20:28.338053+05:30","level":"INFO","msg":"handler: closed","stream_id":{"value":"ya4157ut"}}
+{"time":"2024-10-13T22:20:28.338168+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"ya4157ut"}}
+{"time":"2024-10-13T22:20:28.338183+05:30","level":"INFO","msg":"sender: closed","stream_id":{"value":"ya4157ut"}}
+{"time":"2024-10-13T22:20:28.338409+05:30","level":"INFO","msg":"stream: closed","id":"ya4157ut"}

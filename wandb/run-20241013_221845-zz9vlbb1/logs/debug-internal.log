@@ -1,0 +1,19 @@
+{"time":"2024-10-13T22:18:45.596958+05:30","level":"INFO","msg":"using version","core version":"0.18.3"}
+{"time":"2024-10-13T22:18:45.597033+05:30","level":"INFO","msg":"created symlink","path":"/Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/wandb/run-20241013_221845-zz9vlbb1/logs/debug-core.log"}
+{"time":"2024-10-13T22:18:45.603525+05:30","level":"ERROR","msg":"dialing: google: could not find default credentials. See https://cloud.google.com/docs/authentication/external/set-up-adc for more information"}
+{"time":"2024-10-13T22:18:45.617366+05:30","level":"INFO","msg":"created new stream","id":"zz9vlbb1"}
+{"time":"2024-10-13T22:18:45.617411+05:30","level":"INFO","msg":"stream: started","id":"zz9vlbb1"}
+{"time":"2024-10-13T22:18:45.617438+05:30","level":"INFO","msg":"sender: started","stream_id":{"value":"zz9vlbb1"}}
+{"time":"2024-10-13T22:18:45.61748+05:30","level":"INFO","msg":"handler: started","stream_id":{"value":"zz9vlbb1"}}
+{"time":"2024-10-13T22:18:45.617428+05:30","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"zz9vlbb1"}}
+{"time":"2024-10-13T22:18:46.066152+05:30","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-10-13T22:18:46.067704+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-10-13T22:18:47.2198+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-10-13T22:18:47.219838+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-10-13T22:18:47.854968+05:30","level":"INFO","msg":"stream: closing","id":"zz9vlbb1"}
+{"time":"2024-10-13T22:18:51.676413+05:30","level":"ERROR","msg":"sender: received Exit record more than once, ignoring"}
+{"time":"2024-10-13T22:18:51.729538+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-10-13T22:18:52.148552+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"zz9vlbb1"}}
+{"time":"2024-10-13T22:18:52.148573+05:30","level":"INFO","msg":"sender: closed","stream_id":{"value":"zz9vlbb1"}}
+{"time":"2024-10-13T22:18:52.148521+05:30","level":"INFO","msg":"handler: closed","stream_id":{"value":"zz9vlbb1"}}
+{"time":"2024-10-13T22:18:52.150176+05:30","level":"INFO","msg":"stream: closed","id":"zz9vlbb1"}

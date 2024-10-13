@@ -1,0 +1,44 @@
+_wandb:
+    value:
+        cli_version: 0.18.3
+        m: []
+        python_version: 3.12.7
+        t:
+            "1":
+                - 5
+                - 53
+                - 55
+            "2":
+                - 5
+                - 53
+                - 55
+            "3":
+                - 2
+                - 23
+                - 55
+            "4": 3.12.7
+            "5": 0.18.3
+            "8":
+                - 5
+            "12": 0.18.3
+            "13": darwin-arm64
+activation:
+    value: tanh
+alpha:
+    value: 0.08102572248272832
+batch_size:
+    value: 64
+early_stopping:
+    value: true
+hidden_layer_sizes:
+    value:
+        - 100
+        - 50
+learning_rate:
+    value: 0.0999824890645604
+max_iter:
+    value: 500
+patience:
+    value: 10
+validation_split:
+    value: 0.2
