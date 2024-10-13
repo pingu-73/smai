@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/assignments/3/a3.py", line 451, in <module>
-    for hidden_layer_sizes in hyperparameter_space['hidden_layer_sizes']['values']:
-                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
-TypeError: list indices must be integers or slices, not str
