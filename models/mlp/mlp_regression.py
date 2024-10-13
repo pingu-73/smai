@@ -138,3 +138,43 @@ class MLPRegression:
 
     def predict(self, X):
         return self._forward(X)
+    
+
+
+class MLP__N:
+    def __init__(self, input_size, loss_function, learning_rate=0.01, epochs=1000):
+        self.weights = np.random.randn(input_size)
+        self.bias = np.random.randn()
+        self.loss_function = loss_function
+        self.learning_rate = learning_rate
+        self.epochs = epochs
+        self.losses = []
+
+    def sigmoid(self, z):
+        return 1 / (1 + np.exp(-z))
+
+    def predict(self, X):
+        z = np.dot(X, self.weights) + self.bias
+        return self.sigmoid(z)
+
+    def compute_loss(self, y_true, y_pred):
+        if self.loss_function == 'BCE':
+            return -np.mean(y_true * np.log(y_pred + 1e-12) + (1 - y_true) * np.log(1 - y_pred + 1e-12))
+        elif self.loss_function == 'MSE':
+            return np.mean((y_true - y_pred) ** 2)
+
+    def train(self, X, y):
+        for epoch in range(self.epochs):
+
+            y_pred = self.predict(X)
+
+            loss = self.compute_loss(y, y_pred)
+            self.losses.append(loss)
+
+            if self.loss_function == 'BCE':
+                gradient = np.dot(X.T, (y_pred - y)) / y.size
+            elif self.loss_function == 'MSE':
+                gradient = -2 * np.dot(X.T, (y - y_pred)) / y.size
+
+            self.weights -= self.learning_rate * gradient
+            self.bias -= self.learning_rate * np.mean(y_pred - y)

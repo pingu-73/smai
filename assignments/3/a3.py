@@ -17,7 +17,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'
 from helper import onehot_encoding, Analysis, Data_preparation, train_and_evaluate, Quest_two_three, Quest_two_three_part_2
 from helper import  evaluate_best_model, data_prep, mean_squared_error, r2_score
 from models.mlp.mlp_multi import MLP_MULTI
-from models.mlp.mlp_regression import MLPRegression
+from models.mlp.mlp_regression import MLPRegression, MLP__N
 from performance_measures.MLPPerformance import Matrix
 
 ### """ Question 2: MLP Classifier (2.1)"""
@@ -401,3 +401,61 @@ print(f"Test RMSE: {rms_test:.4f}")
 
 # wandb.finish()
 ##############
+
+
+
+
+
+
+
+
+#################################### Question 3.7
+df = pd.read_csv('./data/external/diabetes.csv')
+
+X = df.drop(columns=['Outcome'])
+y = df['Outcome']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+
+model_bce = MLP__N(input_size=X_train_scaled.shape[1], loss_function='BCE', epochs=1000)
+model_mse = MLP__N(input_size=X_train_scaled.shape[1], loss_function='MSE', epochs=1000)
+
+model_bce.train(X_train_scaled, y_train)
+model_mse.train(X_train_scaled, y_train)
+
+plt.figure(figsize=(12, 5))
+
+plt.subplot(1, 2, 1)
+plt.plot(model_bce.losses, label='BCE Loss', color='blue')
+plt.title('Loss vs Epochs (BCE)')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(model_mse.losses, label='MSE Loss', color='red')
+plt.title('Loss vs Epochs (MSE)')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+
+y_pred_bce = model_bce.predict(X_test_scaled)
+y_pred_mse = model_mse.predict(X_test_scaled)
+
+y_pred_bce_binary = (y_pred_bce > 0.5).astype(int)
+y_pred_mse_binary = (y_pred_mse > 0.5).astype(int)
+
+accuracy_bce = np.mean(y_pred_bce_binary.flatten() == y_test)
+accuracy_mse = np.mean(y_pred_mse_binary.flatten() == y_test)
+
+print(f'Accuracy of BCE model: {accuracy_bce:.4f}')
+print(f'Accuracy of MSE model: {accuracy_mse:.4f}')
+#####################################
