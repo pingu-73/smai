@@ -10,12 +10,11 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.metrics import accuracy_score, f1_score, classification_report
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, r2_score
 warnings.filterwarnings('ignore')
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from helper import onehot_encoding, Analysis, Data_preparation, train_and_evaluate, Quest_two_three, Quest_two_three_part_2
-from helper import  evaluate_best_model, data_prep
+from helper import  evaluate_best_model, data_prep, mean_squared_error, r2_score
 from models.mlp.mlp_multi import MLP_MULTI
 from models.mlp.mlp_regression import MLPRegression
 from performance_measures.MLPPerformance import Matrix
@@ -70,7 +69,6 @@ print(f"F-1 score: {f1:.2f}")
 
 ### ------- Question: 3
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.impute import SimpleImputer
 df = pd.read_csv("./data/external/HousingData.csv")
 print(df.head())
