@@ -1,0 +1,22 @@
+wandb_version: 1
+
+activation:
+  value: tanh
+alpha:
+  value: 0.009150686150951074
+batch_size:
+  value: 32
+early_stopping:
+  value: true
+hidden_layer_sizes:
+  value:
+  - 32
+  - 16
+learning_rate:
+  value: 0.05181581373088216
+max_iter:
+  value: 1000
+patience:
+  value: 20
+validation_split:
+  value: 0.2

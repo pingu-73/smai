@@ -1,0 +1,21 @@
+wandb_version: 1
+
+activation:
+  value: sigmoid
+alpha:
+  value: 0.0023947347025284854
+batch_size:
+  value: 64
+early_stopping:
+  value: true
+hidden_layer_sizes:
+  value:
+  - 32
+learning_rate:
+  value: 0.026172287176302735
+max_iter:
+  value: 1000
+patience:
+  value: 20
+validation_split:
+  value: 0.2

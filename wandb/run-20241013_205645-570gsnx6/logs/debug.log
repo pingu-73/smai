@@ -1,0 +1,21 @@
+2024-10-13 20:56:45,093 INFO    MainThread:73635 [wandb_setup.py:_flush():79] Current SDK version is 0.18.3
+2024-10-13 20:56:45,093 INFO    MainThread:73635 [wandb_setup.py:_flush():79] Configure stats pid to 73635
+2024-10-13 20:56:45,093 INFO    MainThread:73635 [wandb_setup.py:_flush():79] Loading settings from /Users/dikshant/.config/wandb/settings
+2024-10-13 20:56:45,093 INFO    MainThread:73635 [wandb_setup.py:_flush():79] Loading settings from /Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/wandb/settings
+2024-10-13 20:56:45,093 INFO    MainThread:73635 [wandb_setup.py:_flush():79] Loading settings from environment variables: {}
+2024-10-13 20:56:45,093 INFO    MainThread:73635 [wandb_setup.py:_flush():79] Applying setup settings: {'mode': None, '_disable_service': None}
+2024-10-13 20:56:45,093 INFO    MainThread:73635 [wandb_setup.py:_flush():79] Inferring run settings from compute environment: {'program_relpath': 'assignments/3/a3.py', 'program_abspath': '/Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/assignments/3/a3.py', 'program': '/Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/assignments/3/a3.py'}
+2024-10-13 20:56:45,093 INFO    MainThread:73635 [wandb_setup.py:_flush():79] Applying login settings: {}
+2024-10-13 20:56:45,093 INFO    MainThread:73635 [wandb_init.py:_log_setup():532] Logging user logs to /Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/wandb/run-20241013_205645-570gsnx6/logs/debug.log
+2024-10-13 20:56:45,094 INFO    MainThread:73635 [wandb_init.py:_log_setup():533] Logging internal logs to /Users/dikshant/Desktop/college/smai/smai-m24-assignments-pingu-73/wandb/run-20241013_205645-570gsnx6/logs/debug-internal.log
+2024-10-13 20:56:45,094 INFO    MainThread:73635 [wandb_init.py:init():617] calling init triggers
+2024-10-13 20:56:45,094 INFO    MainThread:73635 [wandb_init.py:init():624] wandb.init called with sweep_config: {}
+config: {'method': 'bayes', 'metric': {'name': 'mse_test', 'goal': 'minimize'}, 'parameters': {'hidden_layer_sizes': {'values': [(32,), (64,), (32, 16), (64, 32), (128, 64, 32)]}, 'activation': {'values': ['relu', 'tanh', 'sigmoid']}, 'learning_rate': {'min': 0.0001, 'max': 0.1}, 'max_iter': {'value': 1000}, 'early_stopping': {'value': True}, 'validation_split': {'value': 0.2}, 'patience': {'value': 20}, 'alpha': {'min': 0.0001, 'max': 0.01}, 'batch_size': {'values': [16, 32, 64]}}}
+2024-10-13 20:56:45,094 INFO    MainThread:73635 [wandb_init.py:init():662] wandb.init() called when a run is still active
+2024-10-13 20:56:45,097 INFO    MainThread:73635 [wandb_run.py:_finish():2164] finishing run pingu-73/question_three_two_housing/1z6ez1g3
+2024-10-13 20:56:45,098 INFO    MainThread:73635 [wandb_run.py:_atexit_cleanup():2428] got exitcode: 1
+2024-10-13 20:56:45,098 INFO    MainThread:73635 [wandb_run.py:_restore():2410] restore
+2024-10-13 20:56:45,098 INFO    MainThread:73635 [wandb_run.py:_restore():2416] restore done
+2024-10-13 20:56:47,905 INFO    MainThread:73635 [wandb_run.py:_footer_history_summary_info():4049] rendering history
+2024-10-13 20:56:47,906 INFO    MainThread:73635 [wandb_run.py:_footer_history_summary_info():4081] rendering summary
+2024-10-13 20:56:47,914 INFO    MainThread:73635 [wandb_run.py:_footer_sync_info():4008] logging synced files

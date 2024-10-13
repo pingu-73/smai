@@ -2,9 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-import warnings
+import warnings, wandb
 import sys, os
 import seaborn as sns
+from itertools import product
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.metrics import accuracy_score, f1_score, classification_report
@@ -106,32 +107,31 @@ print(df.isnull().sum())
 
 
 
-# Impute missing values
+
 imputer = SimpleImputer(strategy='median')
 df_imputed = pd.DataFrame(imputer.fit_transform(df), columns=df.columns)
 
-# Feature engineering
+
 df_imputed['CHAS'] = df_imputed['CHAS'].astype(int)  # Convert to integer
 df_imputed['RM_squared'] = df_imputed['RM'] ** 2
 df_imputed['LSTAT_squared'] = df_imputed['LSTAT'] ** 2
 df_imputed['PTRATIO_squared'] = df_imputed['PTRATIO'] ** 2
 
-# Separate features and target
+
 Y = df_imputed['MEDV'].copy()
 X = df_imputed.drop(columns=['MEDV'])
 
-# Normalize the target variable
+
 Y_mean, Y_std = Y.mean(), Y.std()
 Y = (Y - Y_mean) / Y_std
 
-# Scale features
+
 scaler = StandardScaler()
 X_scaled = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
 
-# Split the data
 X_train, X_test, y_train, y_test = train_test_split(X_scaled.values, Y.values.reshape(-1,1), test_size=0.2, random_state=42)
 
-# Initialize and train the MLPRegression model
+## Initialize and train the MLPRegression model
 mlp = MLPRegression(
     hidden_layer_sizes=(32,),
     activation='relu',
@@ -142,14 +142,14 @@ mlp = MLPRegression(
     patience=10
 )
 
-# Fit the model
+## Fit the model
 mlp.fit(X_train, y_train)
 
 # Make predictions
 y_pred_train = mlp.predict(X_train)
 y_pred_test = mlp.predict(X_test)
 
-# Evaluate the model
+## Evaluate the model
 mse_train = mean_squared_error(y_train, y_pred_train)
 mse_test = mean_squared_error(y_test, y_pred_test)
 r2_train = r2_score(y_train, y_pred_train)
@@ -163,3 +163,107 @@ print(f"Train R_squared: {r2_train:.4f}")
 print(f"Test R_squared: {r2_test:.4f}")
 print(f"Train RMSE: {rms_train:.4f}")
 print(f"Test RMSE: {rms_test:.4f}")
+
+
+
+
+########   Question 3.3
+# hyperparameter_space = {
+#     'hidden_layer_sizes': [(32,), (64,), (32, 16), (64, 32), (128, 64, 32)],
+#     'activation': ['relu', 'tanh', 'sigmoid'],
+#     'learning_rate': np.linspace(0.0001, 0.1, num=5),  # 5 values between 0.0001 and 0.1
+#     'max_iter': 1000,
+#     'early_stopping': True,
+#     'validation_split': 0.2,
+#     'patience': 20,
+#     'alpha': np.linspace(0.0001, 0.01, num=5),  # 5 values between 0.0001 and 0.01
+#     'batch_size': [16, 32, 64]
+# }
+
+# Initialize W&B
+# wandb.init(project="mlp_regression_hyperparameter_tuning")
+
+
+# df = pd.read_csv("./data/external/HousingData.csv")
+
+
+# imputer = SimpleImputer(strategy='median')
+# df_imputed = pd.DataFrame(imputer.fit_transform(df), columns=df.columns)
+
+
+# df_imputed['CHAS'] = df_imputed['CHAS'].astype(int)
+# df_imputed['RM_squared'] = df_imputed['RM'] ** 2
+# df_imputed['LSTAT_squared'] = df_imputed['LSTAT'] ** 2
+# df_imputed['PTRATIO_squared'] = df_imputed['PTRATIO'] ** 2
+
+
+# Y = df_imputed['MEDV'].copy()
+# X = df_imputed.drop(columns=['MEDV'])
+
+
+# Y_mean, Y_std = Y.mean(), Y.std()
+# Y = (Y - Y_mean) / Y_std
+# scaler = StandardScaler()
+# X_scaled = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
+
+
+# X_train, X_test, y_train, y_test = train_test_split(X_scaled.values, Y.values.reshape(-1, 1), test_size=0.2, random_state=42)
+
+# def train_and_log_model(params):
+#     wandb.config.update(params, allow_val_change=True)
+    
+#     mlp = MLPRegression(
+#         hidden_layer_sizes=params['hidden_layer_sizes'],
+#         activation=params['activation'],
+#         learning_rate=params['learning_rate'],
+#         max_iter=params['max_iter'],
+#         early_stopping=params['early_stopping'],
+#         validation_split=params['validation_split'],
+#         patience=params['patience'],
+#         alpha=params['alpha'],
+#         batch_size=params['batch_size']
+#     )
+
+#     mlp.fit(X_train, y_train)
+
+#     y_pred_train = mlp.predict(X_train)
+#     y_pred_test = mlp.predict(X_test)
+
+#     mse_train = mean_squared_error(y_train, y_pred_train)
+#     mse_test = mean_squared_error(y_test, y_pred_test)
+#     r2_train = r2_score(y_train, y_pred_train)
+#     r2_test = r2_score(y_test, y_pred_test)
+#     rms_train = np.sqrt(mse_train)
+#     rms_test = np.sqrt(mse_test)
+
+#     wandb.log({
+#         "Train MSE": mse_train,
+#         "Test MSE": mse_test,
+#         "Train RMSE": rms_train,
+#         "Test RMSE": rms_test,
+#         "Train R_squared": r2_train,
+#         "Test R_squared": r2_test,
+#         "Parameters": params
+#     })
+
+# for hidden_layer_sizes in hyperparameter_space['hidden_layer_sizes']:
+#     for activation in hyperparameter_space['activation']:
+#         for learning_rate in hyperparameter_space['learning_rate']:
+#             for alpha in hyperparameter_space['alpha']:
+#                 for batch_size in hyperparameter_space['batch_size']:
+#                     params = {
+#                         'hidden_layer_sizes': hidden_layer_sizes,
+#                         'activation': activation,
+#                         'learning_rate': learning_rate,
+#                         'max_iter': hyperparameter_space['max_iter'],
+#                         'early_stopping': hyperparameter_space['early_stopping'],
+#                         'validation_split': hyperparameter_space['validation_split'],
+#                         'patience': hyperparameter_space['patience'],
+#                         'alpha': alpha,
+#                         'batch_size': batch_size
+#                     }
+#                     train_and_log_model(params)
+
+# wandb.finish()
+
+#############

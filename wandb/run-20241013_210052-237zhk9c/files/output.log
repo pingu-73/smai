@@ -1,0 +1,3 @@
+Create sweep with ID: szfhd03p
+Sweep URL: https://wandb.ai/pingu-73/question_three_two_housing/sweeps/szfhd03p
+[34m[1mwandb[0m: [33mWARNING[0m Calling wandb.login() after wandb.init() has no effect.

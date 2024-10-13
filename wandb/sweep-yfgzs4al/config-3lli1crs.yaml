@@ -1,0 +1,22 @@
+wandb_version: 1
+
+activation:
+  value: relu
+alpha:
+  value: 0.00947039989275019
+batch_size:
+  value: 16
+early_stopping:
+  value: true
+hidden_layer_sizes:
+  value:
+  - 32
+  - 16
+learning_rate:
+  value: 0.05574391221494118
+max_iter:
+  value: 1000
+patience:
+  value: 20
+validation_split:
+  value: 0.2
