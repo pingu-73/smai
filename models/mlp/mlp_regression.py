@@ -1,174 +1,140 @@
 import numpy as np
+class MLPRegression:
+    def __init__(self, hidden_layer_sizes=(100,), activation='relu', learning_rate=0.001,
+                 max_iter=1000, tol=1e-4, early_stopping=False, validation_split=0.1,
+                 patience=10, alpha=0.0001, batch_size=32):
+        self.hidden_layer_sizes = hidden_layer_sizes
+        self.activation = activation
+        self.learning_rate = learning_rate
+        self.max_iter = max_iter
+        self.tol = tol
+        self.early_stopping = early_stopping
+        self.validation_split = validation_split
+        self.patience = patience
+        self.alpha = alpha  # L2 regularization
+        self.batch_size = batch_size
+        self.weights = []
+        self.biases = []
 
-class ActivationFunction:
-    @staticmethod
-    def sigmoid(x):
-        return 1 / (1 + np.exp(-x))
+    def _initialize_weights(self, n_inputs):
+        self.weights = []
+        self.biases = []
+        layer_sizes = [n_inputs] + list(self.hidden_layer_sizes) + [1]
+        for i in range(len(layer_sizes) - 1):
+            limit = np.sqrt(6 / (layer_sizes[i] + layer_sizes[i + 1]))
+            weight_matrix = np.random.uniform(-limit, limit, (layer_sizes[i], layer_sizes[i + 1]))
+            bias_vector = np.zeros((1, layer_sizes[i + 1]))
+            self.weights.append(weight_matrix)
+            self.biases.append(bias_vector)
 
-    @staticmethod
-    def sigmoid_derivative(x):
-        return x * (1 - x)
-
-    @staticmethod
-    def tanh(x):
-        return np.tanh(x)
-
-    @staticmethod
-    def tanh_derivative(x):
-        return 1 - np.tanh(x) ** 2
-
-    @staticmethod
-    def relu(x):
-        return np.maximum(0, x)
-
-    @staticmethod
-    def relu_derivative(x):
-        return np.where(x > 0, 1, 0)
-
-class MLPRegressor:
-    def __init__(self, input_size, hidden_layers, output_size, lr=0.01, activation='relu'):
-        self.layers = [input_size] + hidden_layers + [output_size]
-        self.lr = lr
-        self.set_activation(activation)
-        self.weights = [np.random.randn(self.layers[i], self.layers[i+1]) for i in range(len(self.layers)-1)]
-        self.biases = [np.zeros((1, self.layers[i+1])) for i in range(len(self.layers)-1)]
-
-    def set_activation(self, activation):
-        if activation == 'sigmoid':
-            self.activation = ActivationFunction.sigmoid
-            self.activation_derivative = ActivationFunction.sigmoid_derivative
-        elif activation == 'tanh':
-            self.activation = ActivationFunction.tanh
-            self.activation_derivative = ActivationFunction.tanh_derivative
-        elif activation == 'relu':
-            self.activation = ActivationFunction.relu
-            self.activation_derivative = ActivationFunction.relu_derivative
+    def _activation(self, z, derivative=False):
+        if self.activation == 'relu':
+            if not derivative:
+                return np.maximum(0, z)
+            else:
+                return (z > 0).astype(float)
+        elif self.activation == 'sigmoid':
+            if not derivative:
+                return 1 / (1 + np.exp(-np.clip(z, -500, 500)))
+            else:
+                s = self._activation(z)
+                return s * (1 - s)
+        elif self.activation == 'tanh':
+            if not derivative:
+                return np.tanh(z)
+            else:
+                return 1 - np.tanh(z) ** 2 + 1e-8  # Add small epsilon
         else:
-            raise ValueError("Unsupported activation function")
+            raise ValueError("Unsupported activation function.")
 
-    def forward(self, X):
-        self.z = []
-        self.a = [X]
+    def _forward(self, X):
+        a = X
+        self.activations = [X]
+        self.z_values = []
+
+        for weight, bias in zip(self.weights, self.biases):
+            z = a @ weight + bias
+            self.z_values.append(z)
+            a = self._activation(z)
+            self.activations.append(a)
+
+        return a
+
+    def _backward(self, X_batch, y_batch):
+        deltas = []
+        self.layers = self.activations
+
+        output = self.layers[-1]
+        delta = (output - y_batch.reshape(-1, 1)) * self._activation(self.z_values[-1], derivative=True)
+        deltas.append(delta)
+
+        for i in reversed(range(len(self.weights) - 1)):
+            delta = deltas[-1] @ self.weights[i + 1].T * self._activation(self.z_values[i], derivative=True)
+            deltas.append(delta)
+
+        deltas.reverse()
+
         for i in range(len(self.weights)):
-            self.z.append(np.dot(self.a[-1], self.weights[i]) + self.biases[i])
-            if i == len(self.weights) - 1:
-                self.a.append(self.z[-1])  # No activation in the output layer
-            else:
-                self.a.append(self.activation(self.z[-1]))
-        return self.a[-1]
+            gradient_w = self.layers[i].T @ deltas[i] / X_batch.shape[0] + self.alpha * self.weights[i]  # L2 regularization
+            gradient_b = np.sum(deltas[i], axis=0, keepdims=True) / X_batch.shape[0]
+            
+            self.weights[i] -= self.learning_rate * gradient_w
 
-    def backward(self, X, y):
-        m = X.shape[0]
-        y = y.reshape(-1, 1)
-        # self.dz = [self.a[-1] - y.reshape(self.a[-1].shape)] 
-        self.dz = [self.a[-1] - y]
-        for i in reversed(range(len(self.weights))):
-            if i != 0:  # Not for the input layer
-                self.dz.append(np.dot(self.dz[-1], self.weights[i].T) * self.activation_derivative(self.a[i]))
-            else:
-                self.dz.append(np.dot(self.dz[-1], self.weights[i].T) * self.activation_derivative(self.a[i]))
+    def _compute_loss(self, y_true, y_pred):
+        return np.mean((y_true - y_pred) ** 2)
 
-        self.dz.reverse()
-        
-        self.dw = [np.dot(self.a[-2].T, self.dz[-1]) / m]
-        self.db = [np.sum(self.dz[-1], axis=0, keepdims=True) / m]
-        for i in range(len(self.weights)-2, -1, -1):
-            self.dz.append(np.dot(self.dz[-1], self.weights[i+1].T) * self.activation_derivative(self.a[i+1]))
-            self.dw.append(np.dot(self.a[i].T, self.dz[-1]) / m)
-            self.db.append(np.sum(self.dz[-1], axis=0, keepdims=True) / m)
-        self.dw.reverse()
-        self.db.reverse()
+    def fit(self, X, y):
+        X = np.array(X)
+        y = np.array(y)
 
-    def update_parameters(self):
-        for i in range(len(self.weights)):
-            self.weights[i] -= self.lr * self.dw[i]
-            self.biases[i] -= self.lr * self.db[i]
+        if self.early_stopping:
+            split_idx = int(X.shape[0] * (1 - self.validation_split))
+            X_train, X_val = X[:split_idx], X[split_idx:]
+            y_train, y_val = y[:split_idx], y[split_idx:]
+        else:
+            X_train, y_train = X, y
 
-    def fit(self, X, y, epochs, method='sgd', batch_size=None, early_stopping=False, patience=5, X_val=None, y_val=None):
-        y= y.ravel()
+        self._initialize_weights(X_train.shape[1])
         best_loss = float('inf')
         patience_counter = 0
-        for epoch in range(epochs):
-            if method == 'sgd':
-                for i in range(X.shape[0]):
-                    self.train(X[i:i+1], y[i:i+1])
-            elif method == 'batch':
-                self.train(X, y)
-            elif method == 'mini_batch':
-                if batch_size is None:
-                    raise ValueError("batch_size must be specified for mini_batch method")
-                indices = np.arange(X.shape[0])
-                np.random.shuffle(indices)
-                for start_idx in range(0, X.shape[0], batch_size):
-                    end_idx = min(start_idx + batch_size, X.shape[0])
-                    batch_indices = indices[start_idx:end_idx]
-                    self.train(X[batch_indices], y[batch_indices])
-            else:
-                raise ValueError("Unsupported training method")
-            
-            # Early stopping
-            if early_stopping and X_val is not None and y_val is not None:
-                val_loss = self.loss(X_val, y_val)
+
+        for epoch in range(self.max_iter):
+            indices = np.arange(X_train.shape[0])
+            np.random.shuffle(indices)
+            X_train_shuffled = X_train[indices]
+            y_train_shuffled = y_train[indices]
+
+            for start in range(0, X_train.shape[0], self.batch_size):
+                end = start + self.batch_size
+                X_batch = X_train_shuffled[start:end]
+                y_batch = y_train_shuffled[start:end]
+
+                y_pred = self._forward(X_batch)
+                self._backward(X_batch, y_batch)
+
+            if self.early_stopping:
+                val_loss = self._compute_loss(y_val, self._forward(X_val))
+                train_loss = self._compute_loss(y_train, self._forward(X_train))
+                print(f'Epoch {epoch}, Training loss: {train_loss:.4f}, Validation loss: {val_loss:.4f}')
+
                 if val_loss < best_loss:
                     best_loss = val_loss
                     patience_counter = 0
                 else:
                     patience_counter += 1
-                if patience_counter >= patience:
-                    print(f"Early stopping at epoch {epoch}")
+
+                if patience_counter >= self.patience:
+                    print("Early stopping.")
                     break
+            else:
+                train_loss = self._compute_loss(y_train, self._forward(X_train))
+                print(f'Epoch {epoch}, Loss: {train_loss:.4f}')
 
+            if np.isnan(train_loss):
+                print("NaN loss encountered. Stopping training.")
+                break
 
-    def train(self, X, y):
-        self.output = self.forward(X)
-        self.backward(X, y)
-        self.update_parameters()
+        return self
 
     def predict(self, X):
-        return self.forward(X)
-
-    def loss(self, X, y):
-        predictions = self.predict(X)
-        return np.mean((predictions - y) ** 2)
-
-    def gradient_check(self, X, y, epsilon=1e-7, tolerance=1e-5):
-        self.forward(X)
-        self.backward(X, y)
-        
-        analytical_grads = {
-            'weights': self.weights,
-            'biases': self.biases
-        }
-        
-        numerical_grads = self.compute_numerical_gradient(X, y, epsilon)
-        
-        for param_name in analytical_grads:
-            analytical_grad = analytical_grads[param_name]
-            numerical_grad = numerical_grads[param_name]
-            relative_error = np.linalg.norm(analytical_grad - numerical_grad) / (np.linalg.norm(analytical_grad) + np.linalg.norm(numerical_grad))
-            if relative_error > tolerance:
-                print(f"Gradient check failed for {param_name}. Relative error: {relative_error}")
-            else:
-                print(f"Gradient check passed for {param_name}. Relative error: {relative_error}")
-
-    def compute_numerical_gradient(self, X, y, epsilon=1e-7):
-        numerical_grads = {}
-        for param_name in ['weights', 'biases']:
-            param = getattr(self, param_name)
-            grad = np.zeros_like(param)
-            it = np.nditer(param, flags=['multi_index'], op_flags=['readwrite'])
-            while not it.finished:
-                idx = it.multi_index
-                original_value = param[idx]
-                
-                param[idx] = original_value + epsilon
-                loss_plus = self.loss(X, y)
-                
-                param[idx] = original_value - epsilon
-                loss_minus = self.loss(X, y)
-                
-                grad[idx] = (loss_plus - loss_minus) / (2 * epsilon)
-                param[idx] = original_value
-                it.iternext()
-            numerical_grads[param_name] = grad
-        return numerical_grads
+        return self._forward(X)
