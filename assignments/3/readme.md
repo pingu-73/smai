@@ -141,8 +141,9 @@ Best Model's Details:
 Best Accuracy: 0.6244541484716157 with parameters: {'epochs': 150, 'learning_rate': 0.1, 'hidden_size': 100, 'activation': 'sigmoid'}
 ```
 <center>
-
+![W&B](../3/figures/2.3_WB.png)
 ![best model](../3/figures/2.3_mlp_best_model.png)
+![table](../3/figures/2.3_table.png)
 </center>
 
 ## 2.4 Best Model Analysis
@@ -628,13 +629,55 @@ F1 Score: 0.5647668393782384
 
 ## 3
 ### 3.1
+#### Analysis of Dataset
+```
+      CRIM    ZN  INDUS  CHAS    NOX     RM   AGE     DIS  RAD  TAX  PTRATIO       B  LSTAT  MEDV
+0  0.00632  18.0   2.31   0.0  0.538  6.575  65.2  4.0900    1  296     15.3  396.90   4.98  24.0
+1  0.02731   0.0   7.07   0.0  0.469  6.421  78.9  4.9671    2  242     17.8  396.90   9.14  21.6
+2  0.02729   0.0   7.07   0.0  0.469  7.185  61.1  4.9671    2  242     17.8  392.83   4.03  34.7
+3  0.03237   0.0   2.18   0.0  0.458  6.998  45.8  6.0622    3  222     18.7  394.63   2.94  33.4
+4  0.06905   0.0   2.18   0.0  0.458  7.147  54.2  6.0622    3  222     18.7  396.90    NaN  36.2
+(506, 14)
+CRIM       20
+ZN         20
+INDUS      20
+CHAS       20
+NOX         0
+RM          0
+AGE        20
+DIS         0
+RAD         0
+TAX         0
+PTRATIO     0
+B           0
+LSTAT      20
+MEDV        0
+dtype: int64
+Checking Coorelation of data
+CRIM      -0.391363
+ZN         0.373136
+INDUS     -0.481772
+CHAS       0.181391
+NOX       -0.427321
+RM         0.695360
+AGE       -0.394656
+DIS        0.249929
+RAD       -0.381626
+TAX       -0.468536
+PTRATIO   -0.507787
+B          0.333461
+LSTAT     -0.735822
+MEDV       1.000000
+Name: MEDV, dtype: float64
+```
 <img src = "../3/figures/Housing_analysis.png" alt="housing analysis" width=500>
 <img src = "../3/figures/housing_boxplot.png" alt="boxplot analysis" width=500>
 <img src = "../3/figures/scatterPlot_housing.png" alt="price vs corelation categories" width=500>
 <img src = "../3/figures/heatmap_housing.png" alt="corelation heatmap" width=500>
 
 ### 3.2
-Wandb links: https://wandb.ai/pingu-73/Question-3, 
+Wandb links: https://wandb.ai/pingu-73/Question-3, https://wandb.ai/pingu-73/mlp_regression_hyperparameter_tuning
+![hyperparameter tuning](../3/figures/Q3_w&b.png)
 
 ### 3.4 
 ```
