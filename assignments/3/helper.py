@@ -364,16 +364,3 @@ def data_prep(data):
     X_test = X_test.values
 
     return X_train, X_test, y_train, y_test
-
-
-def evaluate_model(model, X, y):
-    predictions = model.predict(X)
-    predictions_binary = (predictions > 0.5).astype(int)
-    
-    accuracy = accuracy_score(y, predictions_binary)
-    precision = precision_score(y, predictions_binary, average='samples')
-    recall = recall_score(y, predictions_binary, average='samples')
-    f1 = f1_score(y, predictions_binary, average='samples')
-    hamming = hamming_loss(y, predictions_binary)
-    
-    return accuracy, precision, recall, f1, hamming

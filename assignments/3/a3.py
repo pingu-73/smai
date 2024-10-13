@@ -12,9 +12,12 @@ warnings.filterwarnings('ignore')
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from helper import onehot_encoding, Analysis, Data_preparation, train_and_evaluate, Quest_two_three, Quest_two_three_part_2
-from helper import evaluate_model, evaluate_best_model, data_prep
+from helper import  evaluate_best_model, data_prep
 from models.mlp.mlp_multi import MLP_MULTI
 from models.mlp.mlp_regression import MLPRegressor
+from performance_measures.MLPPerformance import Matrix
+
+### """ Question 2: MLP Classifier (2.1)"""
 
 file_path = "./data/external/WineQT.csv"
 df = pd.read_csv(file_path)
@@ -30,23 +33,36 @@ evaluate_best_model(X_test, y_test,file_path=best_model_path)
 
 
 
-### Multi-label MLP
+# ### Multi-label MLP ------- 2.6
 df = pd.read_csv("./data/external/advertisement.csv")
 X_train, X_test, y_train, y_test = data_prep(df)
+
 X_train = np.asarray(X_train, dtype=float)
 y_train = np.asarray(y_train, dtype=float)
+X_test = np.asarray(X_test, dtype=float)
+y_test = np.asarray(y_test, dtype=float)
+
 input_size = X_train.shape[1]
-hidden_size = 64  # You can adjust this
+hidden_size = 64 
 output_size = y_train.shape[1]
+
 model = MLP_MULTI(input_size, hidden_size, output_size, lr=0.01, activation='relu')
 model.fit(X_train, y_train, epochs=100, method='mini_batch', batch_size=32)
-# Evaluate the model
-accuracy, precision, recall, f1, hamming = evaluate_model(model, X_test, y_test)
-print(f"Accuracy: {accuracy:.4f}")
-print(f"Precision: {precision:.4f}")
-print(f"Recall: {recall:.4f}")
-print(f"F1-score: {f1:.4f}")
-print(f"Hamming loss: {hamming:.4f}")
+
+y_pred = model.predict(X_test) 
+
+accuracy = model.accuracy(X_test, y_test)
+perf = Matrix(y_test, y_pred) 
+hamming = perf.hamming_loss()
+precision = perf.precision_score()
+recall = perf.recall_score()
+f1 = perf.f1_score()
+
+print(f"Accuracy: {accuracy:.2f}")
+print(f"Hamming Loss: {hamming:.2f}")
+print(f"Precision: {precision:.2f}") 
+print(f"Recall: {recall:.2f}")
+print(f"F-1 score: {f1:.2f}") 
 
 
 ### ------- Question: 3

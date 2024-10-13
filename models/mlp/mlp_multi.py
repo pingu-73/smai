@@ -3,14 +3,10 @@ import numpy as np
 class ActivationFunction:
     @staticmethod
     def sigmoid(x):
-        if isinstance(x, (int, float)):
-            return 1 / (1 + np.exp(-x))
-        else:
-            return 1 / (1 + np.exp(-np.asarray(x, dtype=float)))
+        return 1 / (1 + np.exp(-np.asarray(x, dtype=float)))
 
     @staticmethod
     def sigmoid_derivative(x):
-        x = np.asarray(x, dtype=float)
         return x * (1 - x)
 
     @staticmethod
@@ -30,12 +26,13 @@ class ActivationFunction:
         return np.where(x > 0, 1, 0)
 
     @staticmethod
-    def linear(x):
-        return x
+    def softmax(x):
+        exp_x = np.exp(x - np.max(x, axis=1, keepdims=True))  # For numerical stability
+        return exp_x / np.sum(exp_x, axis=1, keepdims=True)
 
     @staticmethod
-    def linear_derivative(x):
-        return np.ones_like(x)
+    def softmax_derivative(output, y):
+        return output - y  # Derivative for softmax and cross-entropy combined
 
 class MLP_MULTI:
     def __init__(self, input_size, hidden_size, output_size, lr=0.01, activation='sigmoid'):
@@ -56,9 +53,6 @@ class MLP_MULTI:
         elif activation == 'relu':
             self.activation = ActivationFunction.relu
             self.activation_derivative = ActivationFunction.relu_derivative
-        elif activation == 'linear':
-            self.activation = ActivationFunction.linear
-            self.activation_derivative = ActivationFunction.linear_derivative
         else:
             raise ValueError("Unsupported activation function")
 
@@ -67,27 +61,30 @@ class MLP_MULTI:
         self.z1 = np.dot(X, self.W1) + self.b1
         self.a1 = self.activation(self.z1)
         self.z2 = np.dot(self.a1, self.W2) + self.b2
-        self.a2 = ActivationFunction.sigmoid(self.z2)  # Use sigmoid for multi-label output
+        self.a2 = ActivationFunction.softmax(self.z2)  # Use softmax for multi-class output
         return self.a2
 
     def backward(self, X, y):
         X = np.asarray(X, dtype=float)
         y = np.asarray(y, dtype=float)
-        self.error = y - self.a2
-        self.a2_delta = self.error * ActivationFunction.sigmoid_derivative(self.a2)
-        self.a1_error = self.a2_delta.dot(self.W2.T)
+        
+        # Error and delta calculations using softmax derivative for cross-entropy loss
+        self.error = ActivationFunction.softmax_derivative(self.a2, y)  # softmax_derivative
+        self.a1_error = self.error.dot(self.W2.T)
         self.a1_delta = self.a1_error * self.activation_derivative(self.a1)
+
+        # Weight and bias updates
         self.W1 += X.T.dot(self.a1_delta) * self.lr
-        self.W2 += self.a1.T.dot(self.a2_delta) * self.lr
+        self.W2 += self.a1.T.dot(self.error) * self.lr
         self.b1 += np.sum(self.a1_delta, axis=0, keepdims=True) * self.lr
-        self.b2 += np.sum(self.a2_delta, axis=0, keepdims=True) * self.lr
+        self.b2 += np.sum(self.error, axis=0, keepdims=True) * self.lr
 
     def train(self, X, y):
         self.output = self.forward(X)
         self.backward(X, y)
 
     def predict(self, X):
-        return self.forward(X)
+        return np.argmax(self.forward(X), axis=1)  # Predicted class is the one with the highest softmax score
 
     def fit(self, X, y, epochs, method='sgd', batch_size=None):
         if method == 'sgd':
@@ -118,6 +115,11 @@ class MLP_MULTI:
                 end_idx = min(start_idx + batch_size, X.shape[0])
                 batch_indices = indices[start_idx:end_idx]
                 self.train(X[batch_indices], y[batch_indices])
+
+    def accuracy(self, X, y_true):
+        y_pred = self.predict(X)
+        y_true_labels = np.argmax(y_true, axis=1)
+        return np.mean(y_pred == y_true_labels)
 
     def save(self, path):
         np.savez(path, W1=self.W1, W2=self.W2, b1=self.b1, b2=self.b2)

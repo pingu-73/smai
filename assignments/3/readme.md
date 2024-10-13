@@ -173,3 +173,13 @@ Confusion Matrix:
  [ 0  0  2 14  9  0]
  [ 0  0  0  1  3  0]]
 ```
+
+
+### 2.6 Multi Label MLP
+```
+Accuracy: 0.34
+Hamming Loss: 0.66
+Precision: 0.12
+Recall: 0.34
+F-1 score: 0.17
+```

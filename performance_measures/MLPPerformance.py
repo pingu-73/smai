@@ -7,8 +7,19 @@ class PerformanceMatrix:
         self.y_pred = y_pred
         self.average = average
         # self.classes = np.unique(y_true) 
-        self.classes = np.unique(np.concatenate((y_true, y_pred)))
+        # self.classes = np.unique(np.concatenate((y_true, y_pred)))
+        self.classes = np.unique(y_true)
 
+    def softmax(self, logits):
+        """Apply softmax to logits."""
+        exp_logits = np.exp(logits - np.max(logits, axis=1, keepdims=True))  # for numerical stability
+        return exp_logits / np.sum(exp_logits, axis=1, keepdims=True)
+
+    def acc(self):
+        correct = np.sum(self.y_true == self.y_pred)
+        total = len(self.y_true)
+        return correct / total
+    
     def accuracy_score(self):
         correct = np.sum(self.y_true == self.y_pred)
         total = len(self.y_true)
@@ -218,3 +229,111 @@ class PerformanceMatrix:
             'weighted avg', weighted_precision, weighted_recall, weighted_f1, total_support)
 
         return report_str
+
+
+
+
+
+
+
+
+class Matrix:
+    def __init__(self, y_true, y_pred, average='weighted'):
+        self.y_true = np.argmax(y_true, axis=1) if y_true.ndim > 1 else y_true  # one-hot encoding
+        self.y_pred = np.argmax(y_pred, axis=1) if y_pred.ndim > 1 else y_pred  # predicted probabilities if necessary
+        self.average = average
+        self.classes = np.unique(self.y_true)
+
+    def softmax(self, logits):
+        """Apply softmax to logits."""
+        exp_logits = np.exp(logits - np.max(logits, axis=1, keepdims=True))  # for numerical stability
+        return exp_logits / np.sum(exp_logits, axis=1, keepdims=True)
+
+    def acc(self):
+        correct = np.sum(self.y_true == self.y_pred)
+        total = len(self.y_true)
+        return correct / total
+
+    def accuracy_score(self):
+        correct = np.sum(self.y_true == self.y_pred)
+        total = len(self.y_true)
+        return correct / total
+
+    def hamming_loss(self):
+        """Hamming loss is the fraction of labels that are incorrectly predicted."""
+        incorrect = np.sum(self.y_true != self.y_pred)
+        return incorrect / len(self.y_true)
+
+    def precision_score(self):
+        unique_classes = np.unique(self.y_true)
+        precisions = []
+
+        for cls in unique_classes:
+            true_positive = np.sum((self.y_true == cls) & (self.y_pred == cls))
+            false_positive = np.sum((self.y_true != cls) & (self.y_pred == cls))
+            
+            if true_positive + false_positive == 0:
+                precision = 0  # division by zero if no positive predictions
+            else:
+                precision = true_positive / (true_positive + false_positive)
+            
+            precisions.append(precision)
+
+        if self.average == 'weighted':
+            class_counts = [np.sum(self.y_true == cls) for cls in unique_classes]
+            weighted_precision = np.average(precisions, weights=class_counts)
+            return weighted_precision
+        else:  # 'macro' average
+            return np.mean(precisions)
+        
+    def recall_score(self):
+        unique_classes = np.unique(self.y_true)
+        recalls = []
+
+        for cls in unique_classes:
+            true_positive = np.sum((self.y_true == cls) & (self.y_pred == cls))
+            false_negative = np.sum((self.y_true == cls) & (self.y_pred != cls))
+
+            if true_positive + false_negative == 0:
+                recall = 0  # division by zero if no relevant instances
+            else:
+                recall = true_positive / (true_positive + false_negative)
+
+            recalls.append(recall)
+
+        if self.average == 'weighted':
+            class_counts = [np.sum(self.y_true == cls) for cls in unique_classes]
+            weighted_recall = np.average(recalls, weights=class_counts)
+            return weighted_recall
+        else:  # 'macro' average
+            return np.mean(recalls)
+
+    def f1_score(self):
+        unique_classes = np.unique(self.y_true)
+        f1_scores = []
+
+        for cls in unique_classes:
+            true_positive = np.sum((self.y_true == cls) & (self.y_pred == cls))
+            false_positive = np.sum((self.y_true != cls) & (self.y_pred == cls))
+            false_negative = np.sum((self.y_true == cls) & (self.y_pred != cls))
+
+            if true_positive == 0:
+                precision = 0
+                recall = 0
+            else:
+                precision = true_positive / (true_positive + false_positive)
+                recall = true_positive / (true_positive + false_negative)
+
+            if precision + recall == 0:
+                f1 = 0
+            else:
+                f1 = 2 * (precision * recall) / (precision + recall)
+
+            f1_scores.append(f1)
+
+        if self.average == 'weighted':
+            class_counts = [np.sum(self.y_true == cls) for cls in unique_classes]
+            weighted_f1 = np.average(f1_scores, weights=class_counts)
+            return weighted_f1
+        else:  #'macro' average
+            return np.mean(f1_scores)
