@@ -4,17 +4,20 @@ import numpy as np
 import seaborn as sns
 import warnings
 import sys, os
+import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.metrics import accuracy_score, f1_score, classification_report
-# from sklearn.neural_network import MLPClassifier  # Example model
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
 warnings.filterwarnings('ignore')
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from helper import onehot_encoding, Analysis, Data_preparation, train_and_evaluate, Quest_two_three, Quest_two_three_part_2
 from helper import  evaluate_best_model, data_prep
 from models.mlp.mlp_multi import MLP_MULTI
-from models.mlp.mlp_regression import MLPRegressor
+from models.mlp.mlp_regression import MLPRegression
 from performance_measures.MLPPerformance import Matrix
 
 ### """ Question 2: MLP Classifier (2.1)"""
@@ -66,48 +69,99 @@ print(f"F-1 score: {f1:.2f}")
 
 
 ### ------- Question: 3
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.impute import SimpleImputer
 df = pd.read_csv("./data/external/HousingData.csv")
-
-print(df.describe())
+print(df.head())
+print(df.shape)
 print(df.isnull().sum())
-df = df.dropna()
-# print(df.isnull().sum())
+## sns.distplot(df.MEDV)
+## plt.title('Distribution of MEDV(Prices)')
+## plt.show()
+## sns.boxplot(df.MEDV)
+## plt.title('Box Plot of MEDV(Prices)')
+## plt.show()
+## print(df.info())
+## print("\n")
+## print("Checking Coorelation of data")
+##correlation = df.corr()
+## print(correlation.loc['MEDV'])
 
-plt.figure(figsize=(10, 6))
-sns.histplot(df['MEDV'], bins=30, kde=True)
-plt.title('Distribution of MEDV')
-plt.xlabel('MEDV')
-plt.ylabel('Frequency')
-plt.show()
+## fig,axes = plt.subplots(figsize=(15,12))
+## sns.heatmap(correlation,square = True,annot = True)
+## plt.title('Heatmap of Correlation')
+## plt.show()
 
-# Partition the dataset
-X = df.drop('MEDV', axis=1)
-y = df['MEDV']
-X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=42)
-X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
+## features = ['LSTAT','RM','PTRATIO']
+## plt.suptitle("Scatter Plots of the Most Correlated Features with House Prices", fontsize=16)
 
-# Normalize and standardize the data
+## for i, col in enumerate(features):
+##     plt.subplot(1, len(features), i + 1)
+##     x = df[col]
+##     y = df['MEDV']
+##     plt.scatter(x, y, marker='o')
+##     plt.title(f"Variation in House Prices")
+##     plt.xlabel(col)
+##     plt.ylabel("House Prices in $1000")
+##plt.show()
+
+
+
+# Impute missing values
+imputer = SimpleImputer(strategy='median')
+df_imputed = pd.DataFrame(imputer.fit_transform(df), columns=df.columns)
+
+# Feature engineering
+df_imputed['CHAS'] = df_imputed['CHAS'].astype(int)  # Convert to integer
+df_imputed['RM_squared'] = df_imputed['RM'] ** 2
+df_imputed['LSTAT_squared'] = df_imputed['LSTAT'] ** 2
+df_imputed['PTRATIO_squared'] = df_imputed['PTRATIO'] ** 2
+
+# Separate features and target
+Y = df_imputed['MEDV'].copy()
+X = df_imputed.drop(columns=['MEDV'])
+
+# Normalize the target variable
+Y_mean, Y_std = Y.mean(), Y.std()
+Y = (Y - Y_mean) / Y_std
+
+# Scale features
 scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_val = scaler.transform(X_val)
-X_test = scaler.transform(X_test)
+X_scaled = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
 
+# Split the data
+X_train, X_test, y_train, y_test = train_test_split(X_scaled.values, Y.values.reshape(-1,1), test_size=0.2, random_state=42)
 
-input_size = X_train.shape[1]  # Number of features
-hidden_layers = [10]  # You can adjust this
-output_size = 1  # For regression, output size is 1
-learning_rate = 0.01
-# activation_function = 'relu'  # Choose activation function
+# Initialize and train the MLPRegression model
+mlp = MLPRegression(
+    hidden_layer_sizes=(32,),
+    activation='relu',
+    learning_rate=0.01,
+    max_iter=1000,
+    early_stopping=True,
+    validation_split=0.2,
+    patience=10
+)
 
-mlp = MLPRegressor(input_size, hidden_layers, output_size, lr=learning_rate)#, activation=activation_function)
-mlp.fit(X_train, y_train, epochs=1000, method='batch')
-predictions = mlp.predict(X_val)
-mse = np.mean((predictions - y_val.to_numpy().reshape(-1, 1)) ** 2)
-rmse = np.sqrt(mse)
-ss_res = np.sum((y_val.values - predictions) ** 2)
-ss_tot = np.sum((y_val.values - np.mean(y_val.values)) ** 2)
-r_squared = 1 - (ss_res / ss_tot)
+# Fit the model
+mlp.fit(X_train, y_train)
 
-print(f'Mean Squared Error(Validation): {mse}')
-print(f"Root Mean Squared Error(Validation): {rmse}")
-print(f"R-squared(Validation): {r_squared}")
+# Make predictions
+y_pred_train = mlp.predict(X_train)
+y_pred_test = mlp.predict(X_test)
+
+# Evaluate the model
+mse_train = mean_squared_error(y_train, y_pred_train)
+mse_test = mean_squared_error(y_test, y_pred_test)
+r2_train = r2_score(y_train, y_pred_train)
+r2_test = r2_score(y_test, y_pred_test)
+rms_train = np.sqrt(mse_train)
+rms_test = np.sqrt(mse_test)
+
+print(f"Train MSE: {mse_train:.4f}")
+print(f"Test MSE: {mse_test:.4f}")
+print(f"Train R_squared: {r2_train:.4f}")
+print(f"Test R_squared: {r2_test:.4f}")
+print(f"Train RMSE: {rms_train:.4f}")
+print(f"Test RMSE: {rms_test:.4f}")
