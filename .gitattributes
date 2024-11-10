@@ -1,1 +1,2 @@
-*.csv filter=lfs diff=lfs merge=lfs -text
+data/external/fashion/fashion-mnist_test.csv filter=lfs diff=lfs merge=lfs -text
+data/external/fashion/fashion-mnist_train.csv filter=lfs diff=lfs merge=lfs -text
