@@ -44,7 +44,32 @@ Figure: GMM and KDE on synthetic dataset
 **The KDE model appears to consistently fit the data well as we can see the higher densities near the dense distribution. Also in the sparse distribution of data the densities are low so overall the KDE plot is consistent with the actual distribution.**
 
 ---
-## Question 3
+## Question 3: Hidden markov Model
+
+### 3.2: Dataset
+- Using librosa library I extracted the MFCC features from digits audio files. I visualized the MFCC features as a heatmap. Following plots shows these heatmaps for each digit.
+<center>
+<img src="../5/figures/0_yweweler_30.wav_MFCC.png" width = 400>
+<img src="../5/figures/1_theo_6.wav_MFCC.png" width = 400>
+<img src="../5/figures/2_yweweler_41.wav_MFCC.png" width = 400>
+<img src="../5/figures/3_george_6.wav_MFCC.png" width = 400>
+<img src="../5/figures/4_jackson_44.wav_MFCC.png" width = 400>
+<img src="../5/figures/5_theo_33.wav_MFCC.png" width = 400>
+<img src="../5/figures/6_jackson_31.wav_MFCC.png" width = 400>
+<img src="../5/figures/7_george_37.wav_MFCC.png" width = 400>
+<img src="../5/figures/8_lucas_46.wav_MFCC.png" width = 400>
+<img src="../5/figures/9_theo_6.wav_MFCC.png" width = 400>
+</center>
+
+- From these plots distinct temporal progression from left to right in the MFCC feature values with time. For ex. Digit 0 shows strong features in the first coefficients that evolve over 8 frames, Digit 1 shows more compact pattern over ~5 frames and similarly for other digits.
+- Since HMMs are designed to model such sequetial data where the current state depends on previous states. The MFCC patterns shows such sequetial progression. Hence HMMs are suitable for this task.
+
+### 3.4 Metrics
+- I test the above model on test set and got **90.00%** accuracy
+- I also test this model on my personal recordings of digts and got following predictions for each digit. 
+- Overall I got the accuracy of **30%** on personal recordings. 
+- This model is performing better on test dataset as compared to personal recordings. This can be due to noise present in personal recordings.
+
 ```
 Trained HMM model for digit 1
 Trained HMM model for digit 7
@@ -399,3 +424,35 @@ True digit: 8, Predicted digit: 8
 True digit: 8, Predicted digit: 6
 Generalization Accuracy on Personal Recordings: 30.00%
 ```
+
+---
+
+## Question 4 Recurrent Neural Networks
+### 4.1 Counting Bits
+#### 4.1.1 Task 1: Dataset
+- I construct a dataset of 100k sequences of random bits with lengths varying from 1 to 16, where each sequence is paired with a label indicating the count of 1's in the sequence. 
+- I split this dataset in training, validation, and test split with ratios (0.8, 0.1, 0.1). 
+
+#### 4.1.2 Task 2: Architecture 
+- I Implemented RNN based model to count number of 1's in given binary sequence. The corresponding code is located in *bit_counting_model.py*. 
+
+#### 4.1.3 Task 3: Training 
+- I trained the above model on dataset generated in 4.1.1. 
+- I used MAE as evaluation metric. I evaluated this model on test set got the following results. 
+    - **MAE on Test Set** : 0.0044
+- I computed random baseline results on test set 
+    - **MAE with Random Baseline** : 2.5557
+
+ <center>
+  <img src="../5/figures/4.1_training_curves.png">     
+  Figure: Epoch vs MAE  
+</center>
+
+#### 4.1.4 Task 4: Generalization 
+- I tried to generalize this model on large sequence of length 17, 18 etc. Following plot shows MAEs for sequences with length from 1 to 32.  
+ <center>
+  <img src="../5/figures/4.1_generalization_results.png">     
+  Figure: Sequence Length v/s MAE  
+</center>
+- We can see that MAE relatively low sequences of length less that 17 after that the MAE is increasing rapidly. 
+- This is because We trained the model on sequences of length 1 to 16 So model performs well on these sequences but for larger sequences(17 to 32) it struggles because it was not exposed to these sequences during training. 
