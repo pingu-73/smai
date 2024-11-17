@@ -7,19 +7,26 @@
 
 ## Question 2: KDE
 
-### 2.2
+## 2.1 KDE Implementation
+- I have Implemented KDE class with given requirements.
+
+### 2.2 Synthetic dataset generation
+- I've generated  dataset of 3000 points and 500 pints uniformly and randomly.
+    - diffused circle = 3000 samples
+    - denser circle = 500 samples 
+- Following plot shows the dataset distribution
 <center>
 <img src="../5/figures/2.2.png"  width = 400>
 
-dataset with two circular distribution
-
-diffused circle = 3000 samples, 
-denser circle = 500 samples 
+Figure: Synthetic dataset generation
 </center>
 
-### 2.3
+### 2.3 GMM vs KDE
+- I tried both KDE and GMM model on above dataset. Following plots shows how KDE and GMM(with 2 components as well as 5 components) fit the above dataset
 <center>
 <img src="../5/figures/2.3.png" width = 400>
+
+Figure: GMM and KDE on synthetic dataset
 </center>
 
 > KDE
@@ -34,7 +41,7 @@ denser circle = 500 samples
 >      - Provided a more detailed representation of density variations
 >      - Risked overfitting by potentially introducing artificial substructures
 
-KDE provided a more flexible, non-parametric representation of the data. GMM offered a parametric approach, potentially more efficient for larger datasets. KDE better captured the varying densities within each circle.
+**The KDE model appears to consistently fit the data well as we can see the higher densities near the dense distribution. Also in the sparse distribution of data the densities are low so overall the KDE plot is consistent with the actual distribution.**
 
 ---
 ## Question 3
