@@ -1,5 +1,40 @@
-# Assignment 5
+<center>
 
+# **Assignment 3 Report**
+## **Name: Dikshant**
+</center>
+
+
+## Question 2: KDE
+
+### 2.2
+<center>
+<img src="../5/figures/2.2.png"  width = 400>
+
+dataset with two circular distribution
+
+diffused circle = 3000 samples, 
+denser circle = 500 samples 
+</center>
+
+### 2.3
+<center>
+<img src="../5/figures/2.3.png" width = 400>
+</center>
+
+> KDE
+> - KDE successfully captured the overall shape of both circular distributions
+> - The density estimate was smooth and continuous across the entire space 
+
+> GMM
+> - GMM with 2 components
+>      - Captured the general structure of the two circles
+>      - May have oversimplified the density variations within each circle
+> - GMM with 5 components
+>      - Provided a more detailed representation of density variations
+>      - Risked overfitting by potentially introducing artificial substructures
+
+KDE provided a more flexible, non-parametric representation of the data. GMM offered a parametric approach, potentially more efficient for larger datasets. KDE better captured the varying densities within each circle.
 
 ---
 ## Question 3

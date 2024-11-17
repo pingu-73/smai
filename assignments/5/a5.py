@@ -2,9 +2,10 @@ import os
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.mixture import GaussianMixture
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from models.kde.kde import KDE
+from models.gmm.gmm import GMM
+# from sklearn.mixture import GaussianMixture as GMM
 
 def generate_circle_data(radius, num_samples, noise_level):
     """
@@ -56,11 +57,11 @@ kde = KDE(bandwidth=0.5, kernel='gaussian')
 kde.fit(data)
 
 # Fit GMM with 2 components
-gmm_2 = GaussianMixture(n_components=2, covariance_type='full', random_state=42)
+gmm_2 = GMM(n_components=2, covariance_type='full', random_state=42)
 gmm_2.fit(data)
 
 # Fit GMM with increasing components (e.g., 5 components)
-gmm_5 = GaussianMixture(n_components=5, covariance_type='full', random_state=42)
+gmm_5 = GMM(n_components=5, covariance_type='full', random_state=42)
 gmm_5.fit(data)
 
 # Plot KDE visualization
